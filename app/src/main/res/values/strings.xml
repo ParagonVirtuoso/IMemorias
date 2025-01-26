@@ -21,6 +21,7 @@
     <string name="sign_in_with_google">Entrar com Google</string>
     <string name="auth_error">Erro na autenticação: %1$s</string>
     <string name="auth_success">Bem-vindo, %1$s!</string>
+    <string name="login_required">Faça login para continuar</string>
     
     <!-- Common -->
     <string name="error_unknown">Ocorreu um erro inesperado</string>

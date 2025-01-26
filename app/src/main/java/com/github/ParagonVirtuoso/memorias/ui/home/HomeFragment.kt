@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
 
     private fun showAuthenticatedUI(user: com.google.firebase.auth.FirebaseUser) {
         binding.apply {
-            textHome.text = "Bem-vindo, ${user.displayName}"
+            textHome.text = getString(R.string.auth_success, user.displayName)
             googleSignInButton.visibility = View.GONE
             signOutButton.visibility = View.VISIBLE
         }
@@ -123,14 +123,19 @@ class HomeFragment : Fragment() {
 
     private fun showUnauthenticatedUI() {
         binding.apply {
-            textHome.text = "Faça login para continuar"
+            textHome.text = getString(R.string.welcome_message)
             googleSignInButton.visibility = View.VISIBLE
             signOutButton.visibility = View.GONE
         }
     }
 
     private fun showLoadingState() {
-        // Implementar estado de loading se necessário
+        binding.apply {
+            progressBar.visibility = View.VISIBLE
+            googleSignInButton.visibility = View.GONE
+            signOutButton.visibility = View.GONE
+            textHome.visibility = View.GONE
+        }
     }
 
     private fun signIn() {
