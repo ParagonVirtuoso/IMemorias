@@ -4,11 +4,40 @@
     android:height="50dp"
     android:viewportWidth="200"
     android:viewportHeight="50">
-    <text
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="@color/on_secondary"
-        android:text="IMemórias" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M20,10 L180,10 Q190,10 190,20 L190,30 Q190,40 180,40 L20,40 Q10,40 10,30 L10,20 Q10,10 20,10 Z" />
+
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M30,20 L30,30 L35,30 L35,26 L40,26 L40,30 L45,30 L45,20 L40,20 L40,24 L35,24 L35,20 Z" />
+
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M50,20 L50,30 L65,30 L65,28 L55,28 L55,26 L63,26 L63,24 L55,24 L55,22 L65,22 L65,20 Z" />
+
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M70,20 L70,30 L75,30 L75,26 L80,26 L80,30 L85,30 L85,20 L80,20 L80,24 L75,24 L75,20 Z" />
+
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M90,20 L90,30 L105,30 L105,28 L95,28 L95,20 Z" />
+
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M110,20 L110,30 L125,30 L125,28 L115,28 L115,26 L123,26 L123,24 L115,24 L115,22 L125,22 L125,20 Z" />
+
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M130,20 L130,30 L145,30 L145,28 L135,28 L135,20 Z" />
+
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M150,20 L150,30 L165,30 L165,28 L155,28 L155,26 L163,26 L163,24 L155,24 L155,22 L165,22 L165,20 Z" />
+
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M170,20 L170,30 L175,30 L175,20 Z" />
 </vector> 
