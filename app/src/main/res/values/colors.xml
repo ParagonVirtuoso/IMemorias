@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- Primary Palette - Vintage Rose -->
+    <color name="primary">#E5B7B7</color>
+    <color name="primary_light">#F2D4D4</color>
+    <color name="primary_dark">#C99B9B</color>
+    <color name="primary_variant">#F2D4D4</color>
+    <color name="on_primary">#442C2E</color>
+
+    <!-- Secondary Palette - Vintage Lilac -->
+    <color name="secondary">#D4B2D8</color>
+    <color name="secondary_light">#E8D1EB</color>
+    <color name="secondary_dark">#B494B8</color>
+    <color name="secondary_variant">#E8D1EB</color>
+    <color name="on_secondary">#2D2D2D</color>
+
+    <!-- Surface Colors -->
+    <color name="background">#FFF5F5</color>
+    <color name="surface">#FFF0F0</color>
+    <color name="surface_variant">#FFF8F8</color>
+    <color name="on_background">#2D2D2D</color>
+    <color name="on_surface">#442C2E</color>
+
+    <!-- States and Feedback -->
+    <color name="success">#A8C9B5</color>
+    <color name="success_light">#C5DCD0</color>
+    <color name="error">#E6A4A4</color>
+    <color name="error_light">#F2C4C4</color>
+    <color name="warning">#E6C9A8</color>
+    <color name="warning_light">#F2DCC4</color>
+    <color name="info">#A8B7C9</color>
+    <color name="info_light">#C4D0E2</color>
+
+    <!-- Component State Colors -->
+    <color name="disabled">#CCCCCC</color>
+    <color name="ripple">#1F000000</color>
+    <color name="ripple_light">#1FFFFFFF</color>
+    <color name="scrim">#52000000</color>
+
+    <!-- Gradients -->
+    <color name="gradient_start">#E5B7B7</color>
+    <color name="gradient_end">#D4B2D8</color>
+
+    <!-- System Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Palette - Dark Vintage Rose -->
+    <color name="primary">#8E6B6B</color>
+    <color name="primary_light">#B28888</color>
+    <color name="primary_dark">#6B4F4F</color>
+    <color name="primary_variant">#A67F7F</color>
+    <color name="on_primary">#FFFFFF</color>
+
+    <!-- Secondary Palette - Dark Vintage Lilac -->
+    <color name="secondary">#8E7291</color>
+    <color name="secondary_light">#B291B6</color>
+    <color name="secondary_dark">#6B556E</color>
+    <color name="secondary_variant">#A684AA</color>
+    <color name="on_secondary">#FFFFFF</color>
+
+    <!-- Surface Colors -->
+    <color name="background">#1F1A1A</color>
+    <color name="surface">#2D2525</color>
+    <color name="surface_variant">#362E2E</color>
+    <color name="on_background">#E6E6E6</color>
+    <color name="on_surface">#F2F2F2</color>
+
+    <!-- States and Feedback -->
+    <color name="success">#5B7C66</color>
+    <color name="success_light">#7B9C86</color>
+    <color name="error">#A66666</color>
+    <color name="error_light">#BF8686</color>
+    <color name="warning">#A68666</color>
+    <color name="warning_light">#BFA686</color>
+    <color name="info">#667186</color>
+    <color name="info_light">#8691A6</color>
+
+    <!-- Component State Colors -->
+    <color name="disabled">#454545</color>
+    <color name="ripple">#33FFFFFF</color>
+    <color name="ripple_light">#1FFFFFFF</color>
+    <color name="scrim">#80000000</color>
+
+    <!-- Gradients (Start and End colors) -->
+    <color name="gradient_start">#8E6B6B</color>
+    <color name="gradient_end">#8E7291</color>
+</resources>

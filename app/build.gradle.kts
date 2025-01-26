@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.github.ParagonVirtuoso.memorias"
-        minSdk = 33
+        minSdk = 28
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -53,6 +53,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation(libs.firebase.auth)
+    implementation("androidx.core:core-splashscreen:1.0.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
