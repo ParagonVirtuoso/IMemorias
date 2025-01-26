@@ -24,7 +24,27 @@
     </style>
 
     <!-- Main theme -->
-    <style name="Theme.IMemorias" parent="Theme.IMemorias.Base" />
+    <style name="Theme.IMemorias" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary Colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+
+        <!-- Secondary Colors -->
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+
+        <!-- Background Colors -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnBackground">@color/on_background</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 
     <!-- No Action Bar theme -->
     <style name="Theme.IMemorias.NoActionBar" parent="Theme.IMemorias.Base">
@@ -39,8 +59,8 @@
     <!-- Splash Screen theme -->
     <style name="Theme.IMemorias.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/primary</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_icon</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/text_imemorias</item>
         <item name="windowSplashScreenAnimationDuration">300</item>
-        <item name="postSplashScreenTheme">@style/Theme.IMemorias.NoActionBar</item>
+        <item name="postSplashScreenTheme">@style/Theme.IMemorias</item>
     </style>
 </resources>

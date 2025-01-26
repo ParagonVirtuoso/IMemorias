@@ -27,4 +27,5 @@
     <string name="error_unknown">Ocorreu um erro inesperado</string>
     <string name="try_again">Tentar novamente</string>
     <string name="loading">Carregando…</string>
+    <string name="toggle_theme">Alternar tema</string>
 </resources>

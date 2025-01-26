@@ -36,6 +36,11 @@
         android:name="com.github.ParagonVirtuoso.memorias.presentation.home.HomeFragment"
         android:label="HomeFragment">
         <action
+            android:id="@+id/action_home_to_auth"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+        <action
             android:id="@+id/action_home_to_playlist"
             app:destination="@id/playlistFragment" />
         <action
