@@ -1,12 +1,14 @@
 package com.github.ParagonVirtuoso.memorias.ui.home
 
 import android.app.Activity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.github.ParagonVirtuoso.memorias.auth.AuthManager
@@ -19,7 +21,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     
     private lateinit var authManager: AuthManager
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var viewModel: HomeViewModel
 
     private val signInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -32,31 +34,103 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setupViewBinding(inflater, container)
-        initializeManagers()
-        setupViews()
-        observeViewModel()
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    private fun setupViewBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViewModel()
+        setupThemeSwitch()
+        initializeManagers()
+        setupViews()
+        observeViewModel()
+    }
+
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+    }
+
+    private fun setupThemeSwitch() {
+        binding.themeSwitch.isChecked = isNightModeActive()
+        binding.themeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            updateTheme(isChecked)
+        }
+    }
+
+    private fun updateTheme(isDarkMode: Boolean) {
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
+    }
+
+    private fun isNightModeActive(): Boolean {
+        return resources.configuration.uiMode and 
+               Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
     }
 
     private fun initializeManagers() {
         authManager = AuthManager(requireContext())
-        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        updateAuthState()
+    }
+
+    private fun updateAuthState() {
+        viewModel.updateAuthState(authManager.getCurrentUser())
     }
 
     private fun setupViews() {
-        binding.googleSignInButton.setOnClickListener { signIn() }
-        updateUIForUser()
+        with(binding) {
+            googleSignInButton.setOnClickListener { signIn() }
+            signOutButton.setOnClickListener { signOut() }
+        }
     }
 
     private fun observeViewModel() {
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            binding.textHome.text = it
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            handleUiState(state)
         }
+
+        viewModel.event.observe(viewLifecycleOwner) { event ->
+            handleEvent(event)
+        }
+    }
+
+    private fun handleUiState(state: HomeUiState) {
+        when (state) {
+            is HomeUiState.Authenticated -> showAuthenticatedUI(state.user)
+            is HomeUiState.Unauthenticated -> showUnauthenticatedUI()
+            is HomeUiState.Error -> showErrorMessage(state.message)
+            HomeUiState.Loading -> showLoadingState()
+        }
+    }
+
+    private fun handleEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.ShowMessage -> showMessage(event.message)
+            HomeEvent.SignInSuccess -> updateAuthState()
+            HomeEvent.SignOutSuccess -> updateAuthState()
+        }
+    }
+
+    private fun showAuthenticatedUI(user: com.google.firebase.auth.FirebaseUser) {
+        binding.apply {
+            textHome.text = "Bem-vindo, ${user.displayName}"
+            googleSignInButton.visibility = View.GONE
+            signOutButton.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showUnauthenticatedUI() {
+        binding.apply {
+            textHome.text = "Faça login para continuar"
+            googleSignInButton.visibility = View.VISIBLE
+            signOutButton.visibility = View.GONE
+        }
+    }
+
+    private fun showLoadingState() {
+        // Implementar estado de loading se necessário
     }
 
     private fun signIn() {
@@ -72,11 +146,10 @@ class HomeFragment : Fragment() {
         authManager.firebaseAuthWithGoogle(
             idToken = idToken,
             onSuccess = { user ->
-                showSuccessMessage(user.email)
-                updateUIForUser()
+                viewModel.onSignInSuccess()
             },
             onError = { exception ->
-                showErrorMessage(exception.message)
+                viewModel.showError(exception.message ?: "Erro desconhecido")
             }
         )
     }
@@ -85,7 +158,7 @@ class HomeFragment : Fragment() {
         try {
             signInLauncher.launch(authManager.getSignInIntent())
         } catch (e: Exception) {
-            showErrorMessage(e.message)
+            viewModel.showError(e.message ?: "Erro ao iniciar login")
         }
     }
 
@@ -97,26 +170,22 @@ class HomeFragment : Fragment() {
                 
                 account.idToken?.let { token ->
                     handleExistingAccount(token)
-                } ?: showErrorMessage("Token do Google não encontrado")
+                } ?: viewModel.showError("Token do Google não encontrado")
             } catch (e: ApiException) {
-                showErrorMessage("Erro no login do Google: ${e.statusCode}")
+                viewModel.showError("Erro no login do Google: ${e.statusCode}")
             }
         } else {
-            showMessage("Login cancelado")
+            viewModel.showError("Login cancelado")
         }
     }
 
-    private fun updateUIForUser() {
-        authManager.getCurrentUser()?.let { user ->
-            binding.textHome.text = "Bem-vindo, ${user.displayName}"
+    private fun signOut() {
+        authManager.signOut {
+            viewModel.onSignOutSuccess()
         }
     }
 
-    private fun showSuccessMessage(email: String?) {
-        showMessage("Login realizado com sucesso: $email")
-    }
-
-    private fun showErrorMessage(message: String?) {
+    private fun showErrorMessage(message: String) {
         showMessage("Erro: $message")
     }
 
