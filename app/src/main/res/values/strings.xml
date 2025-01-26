@@ -12,4 +12,5 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="default_web_client_id">20377311580-8p1nb52p2tbk6ab98uhalf0mli7oqrdn.apps.googleusercontent.com</string>
+    <string name="sign_out">Sair</string>
 </resources>
