@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import android.view.animation.AlphaAnimation
 
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
@@ -66,7 +67,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun handleAuthState(state: AuthState) {
-        binding.progressBar.isVisible = state is AuthState.Loading
+        toggleLoading(state is AuthState.Loading)
 
         when (state) {
             is AuthState.Success -> {
@@ -105,6 +106,30 @@ class AuthFragment : Fragment() {
 
     private fun showMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun toggleLoading(isLoading: Boolean) {
+        val fadeOut = AlphaAnimation(1.0f, 0.0f).apply {
+            duration = 300
+            fillAfter = true
+        }
+        val fadeIn = AlphaAnimation(0.0f, 1.0f).apply {
+            duration = 300
+            fillAfter = true
+        }
+
+        if (isLoading) {
+            binding.btnGoogleSignIn.startAnimation(fadeOut)
+            binding.progressBar.startAnimation(fadeIn)
+            binding.btnGoogleSignIn.isEnabled = false
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.startAnimation(fadeOut)
+            binding.btnGoogleSignIn.startAnimation(fadeIn)
+            binding.btnGoogleSignIn.isEnabled = true
+            binding.progressBar.visibility = View.GONE
+        }
+        binding.btnGoogleSignIn.text = if (isLoading) "" else getString(R.string.sign_in_with_google)
     }
 
     override fun onDestroyView() {

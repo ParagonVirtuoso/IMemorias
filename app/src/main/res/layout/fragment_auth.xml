@@ -75,9 +75,9 @@
         android:indeterminateTint="@color/white"
         android:visibility="gone"
         android:elevation="@dimen/elevation_large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/btnGoogleSignIn"
+        app:layout_constraintEnd_toEndOf="@id/btnGoogleSignIn"
+        app:layout_constraintStart_toStartOf="@id/btnGoogleSignIn"
+        app:layout_constraintTop_toTopOf="@id/btnGoogleSignIn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout> 
