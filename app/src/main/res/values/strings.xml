@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IMemorias</string>
+    <string name="app_name">IMemórias</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -13,4 +14,18 @@
 
     <string name="default_web_client_id">20377311580-8p1nb52p2tbk6ab98uhalf0mli7oqrdn.apps.googleusercontent.com</string>
     <string name="sign_out">Sair</string>
+
+    <!-- Auth Screen -->
+    <string name="welcome_message">Bem-vindo ao IMemorias</string>
+    <string name="auth_description">Organize e reviva seus momentos especiais através de vídeos do YouTube</string>
+    <string name="sign_in_with_google">Entrar com Google</string>
+    <string name="auth_error">Erro na autenticação: %1$s</string>
+    <string name="auth_success">Bem-vindo, %1$s!</string>
+    <string name="login_required">Faça login para continuar</string>
+    
+    <!-- Common -->
+    <string name="error_unknown">Ocorreu um erro inesperado</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="loading">Carregando…</string>
+    <string name="toggle_theme">Alternar tema</string>
 </resources>

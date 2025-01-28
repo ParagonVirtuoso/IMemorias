@@ -52,4 +52,18 @@ class AuthManager(private val context: Context) {
                 onError(exception)
             }
     }
+
+    fun getAuthState(): AuthState {
+        return when {
+            auth.currentUser != null -> AuthState.AUTHENTICATED
+            GoogleSignIn.getLastSignedInAccount(context) != null -> AuthState.NEEDS_REFRESH
+            else -> AuthState.UNAUTHENTICATED
+        }
+    }
+
+    sealed class AuthState {
+        object AUTHENTICATED : AuthState()
+        object NEEDS_REFRESH : AuthState()
+        object UNAUTHENTICATED : AuthState()
+    }
 } 

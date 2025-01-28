@@ -24,7 +24,33 @@
     </style>
 
     <!-- Main theme -->
-    <style name="Theme.IMemorias" parent="Theme.IMemorias.Base" />
+    <style name="Theme.IMemorias" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnBackground">@color/on_background</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+
+        <!-- System Bars -->
+        <item name="android:statusBarColor">@color/gradient_start</item>
+        <item name="android:navigationBarColor">@color/gradient_end</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+
+        <!-- Window -->
+        <item name="android:windowBackground">@drawable/primary_gradient</item>
+        
+        <!-- Text Appearances -->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.IMemorias.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.IMemorias.Headline2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.IMemorias.Body1</item>
+    </style>
 
     <!-- No Action Bar theme -->
     <style name="Theme.IMemorias.NoActionBar" parent="Theme.IMemorias.Base">
@@ -39,8 +65,39 @@
     <!-- Splash Screen theme -->
     <style name="Theme.IMemorias.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/primary</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_icon</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/text_imemorias</item>
         <item name="windowSplashScreenAnimationDuration">300</item>
-        <item name="postSplashScreenTheme">@style/Theme.IMemorias.NoActionBar</item>
+        <item name="postSplashScreenTheme">@style/Theme.IMemorias</item>
+    </style>
+
+    <!-- Text Styles -->
+    <style name="TextAppearance.IMemorias.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">48sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.IMemorias.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="TextAppearance.IMemorias.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <!-- Button Style -->
+    <style name="Widget.IMemorias.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="elevation">4dp</item>
     </style>
 </resources>

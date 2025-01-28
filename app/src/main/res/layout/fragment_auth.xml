@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:id="@+id/tvLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:text="@string/app_name"
+        android:textAppearance="?attr/textAppearanceHeadline1"
+        android:elevation="@dimen/elevation_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xlarge"
+        android:text="@string/welcome_message"
+        android:textAppearance="?attr/textAppearanceHeadline2"
+        android:textAlignment="center"
+        android:elevation="@dimen/elevation_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLogo" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_xlarge"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:text="@string/auth_description"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textAlignment="center"
+        android:elevation="@dimen/elevation_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoogleSignIn"
+        style="@style/Widget.IMemorias.Button"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginHorizontal="@dimen/spacing_xlarge"
+        android:layout_marginBottom="@dimen/spacing_xxlarge"
+        android:backgroundTint="@color/white"
+        android:drawableStart="@drawable/ic_google"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0"
+        android:paddingHorizontal="@dimen/spacing_xlarge"
+        android:text="@string/sign_in_with_google"
+        android:textAllCaps="false"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/text_body1"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:elevation="@dimen/elevation_default"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        android:elevation="@dimen/elevation_large"
+        app:layout_constraintBottom_toBottomOf="@id/btnGoogleSignIn"
+        app:layout_constraintEnd_toEndOf="@id/btnGoogleSignIn"
+        app:layout_constraintStart_toStartOf="@id/btnGoogleSignIn"
+        app:layout_constraintTop_toTopOf="@id/btnGoogleSignIn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout> 
