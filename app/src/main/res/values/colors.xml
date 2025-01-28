@@ -1,47 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary Palette - Vintage Rose -->
-    <color name="primary">#E5B7B7</color>
-    <color name="primary_light">#F2D4D4</color>
-    <color name="primary_dark">#C99B9B</color>
-    <color name="primary_variant">#F2D4D4</color>
-    <color name="on_primary">#442C2E</color>
+    <!-- Material Theme Colors -->
+    <color name="primary">#7B68EE</color>
+    <color name="primary_variant">#6A5ACD</color>
+    <color name="primary_light">#9683EC</color>
+    <color name="on_primary">#FFFFFF</color>
+    
+    <color name="secondary">#4DB6AC</color>
+    <color name="secondary_variant">#26A69A</color>
+    <color name="secondary_light">#80CBC4</color>
+    <color name="on_secondary">#000000</color>
+    
+    <color name="background">#F5F5F9</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="on_background">#2C2C2C</color>
+    <color name="on_surface">#2C2C2C</color>
 
-    <!-- Secondary Palette - Vintage Lilac -->
-    <color name="secondary">#D4B2D8</color>
-    <color name="secondary_light">#E8D1EB</color>
-    <color name="secondary_dark">#B494B8</color>
-    <color name="secondary_variant">#E8D1EB</color>
-    <color name="on_secondary">#2D2D2D</color>
+    <!-- Common Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
 
-    <!-- Surface Colors -->
-    <color name="background">#FFF5F5</color>
-    <color name="surface">#FFF0F0</color>
-    <color name="surface_variant">#FFF8F8</color>
-    <color name="on_background">#2D2D2D</color>
-    <color name="on_surface">#442C2E</color>
-
-    <!-- States and Feedback -->
-    <color name="success">#A8C9B5</color>
-    <color name="success_light">#C5DCD0</color>
-    <color name="error">#E6A4A4</color>
-    <color name="error_light">#F2C4C4</color>
-    <color name="warning">#E6C9A8</color>
-    <color name="warning_light">#F2DCC4</color>
-    <color name="info">#A8B7C9</color>
-    <color name="info_light">#C4D0E2</color>
-
-    <!-- Component State Colors -->
-    <color name="disabled">#CCCCCC</color>
-    <color name="ripple">#1F000000</color>
-    <color name="ripple_light">#1FFFFFFF</color>
-    <color name="scrim">#52000000</color>
-
-    <!-- Gradients -->
-    <color name="gradient_start">#E5B7B7</color>
-    <color name="gradient_end">#D4B2D8</color>
-
-    <!-- System Colors -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#9683EC</color>
+    <color name="gradient_end">#6A5ACD</color>
 </resources>

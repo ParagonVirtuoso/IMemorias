@@ -1,36 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
-    <dimen name="nav_header_height">176dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <!-- Spacing System -->
+    <dimen name="spacing_xxsmall">2dp</dimen>
+    <dimen name="spacing_xsmall">4dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_xlarge">32dp</dimen>
+    <dimen name="spacing_xxlarge">48dp</dimen>
+    <dimen name="spacing_huge">64dp</dimen>
 
-    <!-- Margins -->
-    <dimen name="margin_small">8dp</dimen>
-    <dimen name="margin_medium">16dp</dimen>
-    <dimen name="margin_large">24dp</dimen>
-    <dimen name="margin_xlarge">32dp</dimen>
+    <!-- Typography Scale -->
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_body2">14sp</dimen>
+    <dimen name="text_body1">16sp</dimen>
+    <dimen name="text_subtitle">18sp</dimen>
+    <dimen name="text_title">20sp</dimen>
+    <dimen name="text_headline">24sp</dimen>
+    <dimen name="text_display">34sp</dimen>
+    <dimen name="text_jumbo">48sp</dimen>
 
-    <!-- Paddings -->
-    <dimen name="padding_small">8dp</dimen>
-    <dimen name="padding_medium">16dp</dimen>
-    <dimen name="padding_large">24dp</dimen>
-
-    <!-- Text Sizes -->
-    <dimen name="text_size_small">12sp</dimen>
-    <dimen name="text_size_medium">14sp</dimen>
-    <dimen name="text_size_large">16sp</dimen>
-    <dimen name="text_size_xlarge">20sp</dimen>
-    <dimen name="text_size_title">24sp</dimen>
-
-    <!-- Component Sizes -->
+    <!-- Component Specific -->
     <dimen name="button_height">48dp</dimen>
-    <dimen name="icon_size_small">24dp</dimen>
-    <dimen name="icon_size_medium">32dp</dimen>
-    <dimen name="icon_size_large">48dp</dimen>
+    <dimen name="button_min_width">120dp</dimen>
+    <dimen name="button_padding_horizontal">32dp</dimen>
+    <dimen name="button_padding_vertical">12dp</dimen>
+    <dimen name="button_corner_radius">24dp</dimen>
+    <dimen name="button_elevation">4dp</dimen>
 
-    <!-- Navigation -->
-    <dimen name="nav_header_padding">16dp</dimen>
+    <!-- Icons -->
+    <dimen name="icon_size_small">16dp</dimen>
+    <dimen name="icon_size_default">24dp</dimen>
+    <dimen name="icon_size_large">32dp</dimen>
+    <dimen name="icon_padding">8dp</dimen>
+
+    <!-- Elevation -->
+    <dimen name="elevation_none">0dp</dimen>
+    <dimen name="elevation_small">2dp</dimen>
+    <dimen name="elevation_default">4dp</dimen>
+    <dimen name="elevation_large">8dp</dimen>
+    <dimen name="elevation_xlarge">16dp</dimen>
+
+    <!-- Screen Margins -->
+    <dimen name="screen_margin_horizontal">16dp</dimen>
+    <dimen name="screen_margin_vertical">16dp</dimen>
+    <dimen name="content_margin_horizontal">16dp</dimen>
+    <dimen name="content_margin_vertical">16dp</dimen>
+
+    <!-- Navigation Drawer -->
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="nav_header_vertical_spacing">@dimen/spacing_small</dimen>
+    <dimen name="activity_horizontal_margin">@dimen/spacing_medium</dimen>
+    <dimen name="activity_vertical_margin">@dimen/spacing_medium</dimen>
+    <dimen name="fab_margin">@dimen/spacing_medium</dimen>
 </resources>
