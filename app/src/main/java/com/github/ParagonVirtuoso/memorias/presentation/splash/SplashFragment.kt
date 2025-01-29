@@ -51,12 +51,12 @@ class SplashFragment : Fragment() {
 
     private suspend fun navigateToHome() {
         delay(1500)
-        findNavController().navigate(R.id.action_splash_to_home)
+        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
     }
 
     private suspend fun navigateToAuth() {
         delay(1500)
-        findNavController().navigate(R.id.action_splash_to_auth)
+        findNavController().navigate(R.id.action_splashFragment_to_authFragment)
     }
 
     private fun showError(message: String) {
