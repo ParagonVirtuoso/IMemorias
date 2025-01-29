@@ -28,4 +28,27 @@
     <string name="try_again">Tentar novamente</string>
     <string name="loading">Carregando…</string>
     <string name="toggle_theme">Alternar tema</string>
+    <string name="search_hint">Buscar vídeos...</string>
+
+    <!-- Home Screen -->
+    <string name="home_description">Organize e reviva seus momentos especiais através de vídeos do YouTube</string>
+    <string name="quick_actions">Ações Rápidas</string>
+    <string name="search_videos">Buscar Vídeos</string>
+    <string name="recent_memories">Memórias Recentes</string>
+    <string name="no_memories_yet">Você ainda não tem memórias salvas.\nComece adicionando uma nova memória!</string>
+    <string name="add_memory">Nova Memória</string>
+
+    <!-- Error Messages -->
+    <string name="error_403">Não foi possível acessar o YouTube. Por favor, verifique sua chave de API.</string>
+
+    <!-- Dialog -->
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="sign_out_confirmation">Tem certeza que deseja sair do aplicativo?</string>
+
+    <!-- Search Screen -->
+    <string name="search_empty_state">Busque por vídeos do YouTube para adicionar às suas memórias</string>
+    <string name="search_no_results">Nenhum resultado encontrado para "%1$s"</string>
+    <string name="search_error">Erro ao buscar vídeos: %1$s</string>
+    <string name="search_placeholder">Digite o título do vídeo…</string>
 </resources>

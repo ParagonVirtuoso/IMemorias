@@ -1,78 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/primary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/transparent"
+        app:elevation="@dimen/elevation_none">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textColor="@color/on_surface"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </androidx.appcompat.widget.Toolbar>
+            android:elevation="@dimen/elevation_none"
+            app:title="@string/app_name"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+            app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="@dimen/screen_margin_horizontal">
 
-            <TextView
-                android:id="@+id/tvWelcome"
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/welcomeCard"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/on_background"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginTop="@dimen/spacing_small"
+                app:cardCornerRadius="@dimen/button_corner_radius"
+                app:cardElevation="@dimen/elevation_none"
+                app:strokeWidth="0dp"
+                android:backgroundTint="@color/surface"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSignOut"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        android:id="@+id/tvWelcome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_headline"
+                        android:textStyle="bold"
+                        android:textColor="@color/on_surface"
+                        tools:text="Bem-vindo ao IMemorias" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:text="@string/home_description"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_body1"
+                        android:textColor="@color/on_surface" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/actionsCard"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/sign_out"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+                android:layout_marginTop="@dimen/spacing_medium"
+                app:cardCornerRadius="@dimen/button_corner_radius"
+                app:cardElevation="@dimen/elevation_none"
+                app:strokeWidth="0dp"
+                android:backgroundTint="@color/surface"
+                app:layout_constraintTop_toBottomOf="@id/welcomeCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quick_actions"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_title"
+                        android:textColor="@color/on_surface" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSearch"
+                        style="@style/Widget.Material3.Button.ElevatedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spacing_huge"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:text="@string/search_videos"
+                        android:textSize="@dimen/text_body1"
+                        app:cornerRadius="@dimen/button_corner_radius"
+                        app:icon="@drawable/ic_search"
+                        app:iconGravity="textStart"
+                        app:iconPadding="@dimen/icon_padding"
+                        app:iconSize="@dimen/icon_size_default" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/recentMemoriesCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                app:cardCornerRadius="@dimen/button_corner_radius"
+                app:cardElevation="@dimen/elevation_none"
+                app:strokeWidth="0dp"
+                android:backgroundTint="@color/surface"
+                app:layout_constraintTop_toBottomOf="@id/actionsCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/recent_memories"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_title"
+                        android:textColor="@color/on_surface" />
+
+                    <TextView
+                        android:id="@+id/tvNoMemories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:text="@string/no_memories_yet"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_body1"
+                        android:textColor="@color/on_surface" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <ProgressBar
-        android:id="@+id/loadingProgressBar"
+    <!-- Container do Menu Flutuante -->
+    <LinearLayout
+        android:id="@+id/menuContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/spacing_large"
+        android:orientation="vertical"
+        android:gravity="bottom">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- FAB Sair -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabSignOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:text="@string/sign_out"
+            android:textSize="@dimen/text_body1"
+            android:visibility="gone"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:elevation="@dimen/elevation_default"
+            android:backgroundTint="@color/surface"
+            android:textColor="@color/on_surface"
+            app:icon="@drawable/ic_logout"
+            app:iconTint="@color/on_surface" />
+
+        <!-- FAB Nova Memória -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabAddMemory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:text="@string/add_memory"
+            android:textSize="@dimen/text_body1"
+            android:visibility="gone"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:elevation="@dimen/elevation_default"
+            android:backgroundTint="@color/primary_light"
+            android:textColor="@color/on_primary"
+            app:icon="@drawable/ic_add"
+            app:iconTint="@color/on_primary" />
+
+        <!-- FAB Menu Principal -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_menu"
+            app:fabSize="normal"
+            app:elevation="@dimen/elevation_default"
+            android:backgroundTint="@color/surface"
+            app:tint="@color/on_surface" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
