@@ -1,42 +1,45 @@
 package com.github.ParagonVirtuoso.memorias.presentation.search
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.ParagonVirtuoso.memorias.domain.model.Video
-import com.github.ParagonVirtuoso.memorias.domain.usecase.SearchVideosUseCase
+import com.github.ParagonVirtuoso.memorias.domain.model.SearchParams
+import com.github.ParagonVirtuoso.memorias.domain.model.VideoResult
+import com.github.ParagonVirtuoso.memorias.domain.repository.VideoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchVideosUseCase: SearchVideosUseCase
+    private val videoRepository: VideoRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<SearchUiState>(SearchUiState.Initial)
-    val uiState: StateFlow<SearchUiState> = _uiState
+    private val _searchResults = MutableStateFlow<VideoResult>(VideoResult.Initial)
+    val searchResults: StateFlow<VideoResult> = _searchResults
 
-    fun search(query: String) {
-        if (query.isBlank()) return
+    fun searchVideos(query: String) {
+        Log.d("SearchViewModel", "Iniciando busca por vídeos com query: $query")
         
         viewModelScope.launch {
-            _uiState.value = SearchUiState.Loading
-            try {
-                searchVideosUseCase(query).collect { videos ->
-                    _uiState.value = SearchUiState.Success(videos)
+            videoRepository.searchVideos(SearchParams(query))
+                .onStart { 
+                    Log.d("SearchViewModel", "Iniciando busca...")
+                    _searchResults.value = VideoResult.Loading 
                 }
-            } catch (e: Exception) {
-                _uiState.value = SearchUiState.Error(e.message ?: "Erro ao buscar vídeos")
-            }
+                .catch { exception ->
+                    Log.e("SearchViewModel", "Erro na busca: ${exception.message}", exception)
+                    _searchResults.value = VideoResult.Error(exception.message ?: "Erro desconhecido")
+                }
+                .collect { result ->
+                    Log.d("SearchViewModel", "Resultado recebido: $result")
+                    _searchResults.value = result
+                }
         }
     }
-}
-
-sealed class SearchUiState {
-    object Initial : SearchUiState()
-    object Loading : SearchUiState()
-    data class Success(val videos: List<Video>) : SearchUiState()
-    data class Error(val message: String) : SearchUiState()
 } 

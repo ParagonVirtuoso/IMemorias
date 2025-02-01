@@ -1,29 +1,36 @@
 package com.github.ParagonVirtuoso.memorias.presentation.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.Toast
+import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.github.ParagonVirtuoso.memorias.R
 import com.github.ParagonVirtuoso.memorias.databinding.FragmentSearchBinding
-import com.github.ParagonVirtuoso.memorias.domain.model.Video
+import com.github.ParagonVirtuoso.memorias.domain.model.VideoResult
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import android.widget.EditText
+import androidx.core.content.ContextCompat
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
+
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: SearchViewModel by viewModels()
-    private lateinit var videoAdapter: VideoAdapter
+    private val videoAdapter = VideoAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,54 +43,109 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        setupToolbar()
+        setupSearchView()
         setupRecyclerView()
-        setupSearch()
-        observeViewModel()
+        observeSearchResults()
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun setupSearchView() {
+        binding.searchView.apply {
+            // Configurar cores
+            val searchEditText = findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+            searchEditText?.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface))
+            searchEditText?.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface))
+            
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let { viewModel.searchVideos(it) }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText.isNullOrBlank()) {
+                        updateUI(VideoResult.Initial)
+                    }
+                    return true
+                }
+            })
+        }
     }
 
     private fun setupRecyclerView() {
-        videoAdapter = VideoAdapter(emptyList())
-        binding.rvVideos.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvVideos.adapter = videoAdapter
+        binding.recyclerView.apply {
+            adapter = videoAdapter
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
+
+        videoAdapter.onItemClick = { video ->
+            // Implementar navegação para detalhes do vídeo
+            findNavController().navigate(
+                SearchFragmentDirections.actionSearchFragmentToVideoDetailsFragment(video)
+            )
+        }
     }
 
-    private fun setupSearch() {
-        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                performSearch()
-                true
-            } else {
-                false
+    private fun observeSearchResults() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.searchResults.collect { result ->
+                updateUI(result)
             }
         }
     }
 
-    private fun performSearch() {
-        val query = binding.etSearch.text.toString()
-        if (query.isNotBlank()) {
-            viewModel.search(query)
-        }
-    }
-
-    private fun observeViewModel() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiState.collect { state ->
-                when (state) {
-                    is SearchUiState.Initial -> {
-                        binding.progressBar.isVisible = false
-                    }
-                    is SearchUiState.Loading -> {
-                        binding.progressBar.isVisible = true
-                    }
-                    is SearchUiState.Success -> {
-                        binding.progressBar.isVisible = false
-                        videoAdapter.videos = state.videos
-                    }
-                    is SearchUiState.Error -> {
-                        binding.progressBar.isVisible = false
-                        Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
+    private fun updateUI(result: VideoResult) {
+        when (result) {
+            is VideoResult.Initial -> {
+                binding.apply {
+                    progressBar.isVisible = false
+                    recyclerView.isVisible = false
+                    emptyStateTextView.apply {
+                        isVisible = true
+                        text = getString(R.string.search_initial_message)
                     }
                 }
+            }
+            is VideoResult.Loading -> {
+                binding.apply {
+                    progressBar.isVisible = true
+                    recyclerView.isVisible = false
+                    emptyStateTextView.isVisible = false
+                }
+            }
+            is VideoResult.Success -> {
+                binding.apply {
+                    progressBar.isVisible = false
+                    emptyStateTextView.isVisible = result.videos.isEmpty()
+                    if (result.videos.isEmpty()) {
+                        emptyStateTextView.text = getString(R.string.no_results_found)
+                    }
+                    recyclerView.isVisible = result.videos.isNotEmpty()
+                    videoAdapter.submitList(result.videos)
+                }
+            }
+            is VideoResult.Error -> {
+                binding.apply {
+                    progressBar.isVisible = false
+                    recyclerView.isVisible = false
+                    emptyStateTextView.apply {
+                        isVisible = true
+                        text = result.message
+                    }
+                }
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.error_message),
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         }
     }
