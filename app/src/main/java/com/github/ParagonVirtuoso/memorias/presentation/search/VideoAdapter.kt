@@ -1,38 +1,64 @@
 package com.github.ParagonVirtuoso.memorias.presentation.search
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.ParagonVirtuoso.memorias.R
+import com.bumptech.glide.Glide
+import com.github.ParagonVirtuoso.memorias.databinding.ItemVideoBinding
 import com.github.ParagonVirtuoso.memorias.domain.model.Video
 
-class VideoAdapter(videos: List<Video>) : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
-    var videos: List<Video> = videos
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+class VideoAdapter : ListAdapter<Video, VideoAdapter.VideoViewHolder>(VideoDiffCallback()) {
+
+    var onItemClick: ((Video) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_video, parent, false)
-        return VideoViewHolder(view)
+        val binding = ItemVideoBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return VideoViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
-        holder.bind(videos[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = videos.size
+    inner class VideoViewHolder(
+        private val binding: ItemVideoBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-    class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val title: TextView = itemView.findViewById(R.id.tvTitle)
-        private val description: TextView = itemView.findViewById(R.id.tvDescription)
+        init {
+            binding.root.setOnClickListener {
+                val position = absoluteAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick?.invoke(getItem(position))
+                }
+            }
+        }
 
         fun bind(video: Video) {
-            title.text = video.title
-            description.text = video.description
+            binding.apply {
+                titleTextView.text = video.title
+                descriptionTextView.text = video.description
+                
+                Glide.with(thumbnailImageView)
+                    .load(video.thumbnailUrl)
+                    .centerCrop()
+                    .into(thumbnailImageView)
+            }
+        }
+    }
+
+    private class VideoDiffCallback : DiffUtil.ItemCallback<Video>() {
+        override fun areItemsTheSame(oldItem: Video, newItem: Video): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Video, newItem: Video): Boolean {
+            return oldItem == newItem
         }
     }
 } 
