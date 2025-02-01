@@ -71,8 +71,8 @@ class AuthFragment : Fragment() {
 
         when (state) {
             is AuthState.Success -> {
-                showMessage(getString(R.string.auth_success, state.user.name))
-                navigateToHome()
+                hideLoading()
+                findNavController().navigate(R.id.action_authFragment_to_homeFragment)
             }
             is AuthState.Error -> {
                 showMessage(getString(R.string.auth_error, state.message))
@@ -98,10 +98,6 @@ class AuthFragment : Fragment() {
                 showMessage(getString(R.string.auth_error, e.statusCode.toString()))
             }
         }
-    }
-
-    private fun navigateToHome() {
-        findNavController().navigate(R.id.action_auth_to_home)
     }
 
     private fun showMessage(message: String) {
@@ -130,6 +126,10 @@ class AuthFragment : Fragment() {
             binding.progressBar.visibility = View.GONE
         }
         binding.btnGoogleSignIn.text = if (isLoading) "" else getString(R.string.sign_in_with_google)
+    }
+
+    private fun hideLoading() {
+        toggleLoading(false)
     }
 
     override fun onDestroyView() {

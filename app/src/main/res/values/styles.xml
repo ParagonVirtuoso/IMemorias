@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="android:textColorHint">@color/on_surface</item>
+
+        <item name="android:textCursorDrawable">@color/on_surface</item>
+
+        <item name="android:tint">@color/on_surface</item>
+
+        <item name="android:editTextColor">@color/on_surface</item>
+        <item name="android:editTextBackground">@null</item>
+    </style>
+</resources> 

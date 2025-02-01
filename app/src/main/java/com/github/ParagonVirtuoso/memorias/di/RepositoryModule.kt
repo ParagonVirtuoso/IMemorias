@@ -2,6 +2,8 @@ package com.github.ParagonVirtuoso.memorias.di
 
 import com.github.ParagonVirtuoso.memorias.data.repository.AuthRepositoryImpl
 import com.github.ParagonVirtuoso.memorias.domain.repository.AuthRepository
+import com.github.ParagonVirtuoso.memorias.data.repository.VideoRepositoryImpl
+import com.github.ParagonVirtuoso.memorias.domain.repository.VideoRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +19,8 @@ abstract class RepositoryModule {
     abstract fun bindAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl
     ): AuthRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindVideoRepository(impl: VideoRepositoryImpl): VideoRepository
 } 
