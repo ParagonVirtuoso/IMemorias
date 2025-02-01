@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IMemórias</string>
+    <string name="app_name">IMemorias</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -28,7 +28,7 @@
     <string name="try_again">Tentar novamente</string>
     <string name="loading">Carregando…</string>
     <string name="toggle_theme">Alternar tema</string>
-    <string name="search_hint">Buscar vídeos...</string>
+    <string name="search_hint">Buscar vídeos no YouTube</string>
 
     <!-- Home Screen -->
     <string name="home_description">Organize e reviva seus momentos especiais através de vídeos do YouTube</string>
@@ -47,8 +47,20 @@
     <string name="sign_out_confirmation">Tem certeza que deseja sair do aplicativo?</string>
 
     <!-- Search Screen -->
-    <string name="search_empty_state">Busque por vídeos do YouTube para adicionar às suas memórias</string>
-    <string name="search_no_results">Nenhum resultado encontrado para "%1$s"</string>
-    <string name="search_error">Erro ao buscar vídeos: %1$s</string>
+    <string name="search_title">Buscar Vídeos</string>
+    <string name="search_button">Buscar</string>
     <string name="search_placeholder">Digite o título do vídeo…</string>
+    <string name="search_empty_state">Busque por vídeos do YouTube para adicionar às suas memórias</string>
+    <string name="search_no_results">Nenhum resultado encontrado para \"%1$s\"</string>
+    <string name="search_error">Erro ao buscar vídeos: %1$s</string>
+
+    <!-- Search -->
+    <string name="search_initial_message">Digite algo para buscar vídeos no YouTube</string>
+    <string name="no_results_found">Nenhum vídeo encontrado</string>
+    <string name="error_message">Ocorreu um erro ao buscar os vídeos. Tente novamente.</string>
+
+    <!-- Video Item -->
+    <string name="video_duration">Duração: %1$s</string>
+    <string name="video_views">%1$s visualizações</string>
+    <string name="video_published_at">Publicado em %1$s</string>
 </resources>
