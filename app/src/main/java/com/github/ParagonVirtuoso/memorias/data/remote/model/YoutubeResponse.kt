@@ -51,11 +51,7 @@ data class Thumbnails(
 
 data class Thumbnail(
     @SerializedName("url")
-    val url: String,
-    @SerializedName("width")
-    val width: Int,
-    @SerializedName("height")
-    val height: Int
+    val url: String
 )
 
 data class ContentDetails(
@@ -70,7 +66,5 @@ data class Statistics(
 
 data class PageInfo(
     @SerializedName("totalResults")
-    val totalResults: Int,
-    @SerializedName("resultsPerPage")
-    val resultsPerPage: Int
+    val totalResults: Int
 ) 
