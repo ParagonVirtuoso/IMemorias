@@ -73,7 +73,6 @@ class HomeFragment : Fragment() {
             fabAddMemory.setOnClickListener { navigateToAddMemory() }
             fabSignOut.setOnClickListener { showSignOutConfirmation() }
             
-            // Configurar a Toolbar
             (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         }
     }
@@ -89,19 +88,15 @@ class HomeFragment : Fragment() {
 
     private fun showMenuOptions() {
         with(binding) {
-            // Animação do ícone do menu
             fabMenu.animate()
                 .rotation(90f)
                 .setInterpolator(AccelerateDecelerateInterpolator())
                 .setDuration(300)
                 .withStartAction {
-                    // Inicia a animação com o ícone atual
                     fabMenu.setImageResource(R.drawable.ic_menu)
                 }
                 .withEndAction {
-                    // No meio da rotação, troca para o ícone X
                     fabMenu.setImageResource(R.drawable.ic_close)
-                    // Continua a rotação para completar o movimento
                     fabMenu.animate()
                         .rotation(180f)
                         .setInterpolator(AccelerateDecelerateInterpolator())
@@ -110,7 +105,6 @@ class HomeFragment : Fragment() {
                 }
                 .start()
 
-            // Mostrar FABs com animação
             fabAddMemory.visibility = View.VISIBLE
             fabSignOut.visibility = View.VISIBLE
             
@@ -140,19 +134,15 @@ class HomeFragment : Fragment() {
 
     private fun hideMenuOptions() {
         with(binding) {
-            // Animação do ícone do menu
             fabMenu.animate()
                 .rotation(90f)
                 .setInterpolator(AccelerateDecelerateInterpolator())
                 .setDuration(300)
                 .withStartAction {
-                    // Inicia a animação com o ícone X
                     fabMenu.setImageResource(R.drawable.ic_close)
                 }
                 .withEndAction {
-                    // No meio da rotação, troca para o ícone do menu
                     fabMenu.setImageResource(R.drawable.ic_menu)
-                    // Continua a rotação para completar o movimento
                     fabMenu.animate()
                         .rotation(0f)
                         .setInterpolator(AccelerateDecelerateInterpolator())
@@ -161,7 +151,6 @@ class HomeFragment : Fragment() {
                 }
                 .start()
 
-            // Esconder FABs com animação
             fabAddMemory.animate()
                 .alpha(0f)
                 .scaleX(0f)
@@ -185,7 +174,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showSignOutConfirmation() {
-        hideMenuOptions() // Esconde o menu ao mostrar o diálogo
+        hideMenuOptions()
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.sign_out)
             .setMessage(R.string.sign_out_confirmation)

@@ -1,6 +1,5 @@
 package com.github.ParagonVirtuoso.memorias.presentation.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.ParagonVirtuoso.memorias.domain.model.SearchParams
@@ -24,20 +23,15 @@ class SearchViewModel @Inject constructor(
     val searchResults: StateFlow<VideoResult> = _searchResults
 
     fun searchVideos(query: String) {
-        Log.d("SearchViewModel", "Iniciando busca por vídeos com query: $query")
-        
         viewModelScope.launch {
             videoRepository.searchVideos(SearchParams(query))
                 .onStart { 
-                    Log.d("SearchViewModel", "Iniciando busca...")
                     _searchResults.value = VideoResult.Loading 
                 }
                 .catch { exception ->
-                    Log.e("SearchViewModel", "Erro na busca: ${exception.message}", exception)
                     _searchResults.value = VideoResult.Error(exception.message ?: "Erro desconhecido")
                 }
                 .collect { result ->
-                    Log.d("SearchViewModel", "Resultado recebido: $result")
                     _searchResults.value = result
                 }
         }

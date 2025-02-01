@@ -58,7 +58,6 @@ class SearchFragment : Fragment() {
 
     private fun setupSearchView() {
         binding.searchView.apply {
-            // Configurar cores
             val searchEditText = findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
             searchEditText?.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface))
             searchEditText?.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface))
@@ -87,7 +86,6 @@ class SearchFragment : Fragment() {
         }
 
         videoAdapter.onItemClick = { video ->
-            // Implementar navegação para detalhes do vídeo
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchFragmentToVideoDetailsFragment(video)
             )
