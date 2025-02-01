@@ -1,26 +1,29 @@
 package com.github.ParagonVirtuoso.memorias.data.remote.api
 
+import com.github.ParagonVirtuoso.memorias.BuildConfig
 import com.github.ParagonVirtuoso.memorias.data.remote.model.YoutubeResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface YoutubeApi {
-    @GET("youtube/v3/search")
+    @GET("search")
     suspend fun searchVideos(
+        @Query("q") query: String,
         @Query("part") part: String = "snippet",
         @Query("type") type: String = "video",
-        @Query("q") query: String,
-        @Query("maxResults") maxResults: Int,
-        @Query("pageToken") pageToken: String? = null
+        @Query("maxResults") maxResults: Int = 20,
+        @Query("pageToken") pageToken: String? = null,
+        @Query("key") apiKey: String = BuildConfig.YOUTUBE_API_KEY
     ): YoutubeResponse
 
-    @GET("youtube/v3/videos")
+    @GET("videos")
     suspend fun getVideoDetails(
-        @Query("part") part: String = "contentDetails,statistics",
-        @Query("id") videoId: String
+        @Query("id") videoId: String,
+        @Query("part") part: String = "snippet,contentDetails,statistics",
+        @Query("key") apiKey: String = BuildConfig.YOUTUBE_API_KEY
     ): YoutubeResponse
 
     companion object {
-        const val BASE_URL = "https://www.googleapis.com/"
+        const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
     }
 } 
