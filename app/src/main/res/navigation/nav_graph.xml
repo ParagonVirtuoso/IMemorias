@@ -64,6 +64,19 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.github.ParagonVirtuoso.memorias.presentation.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_videoDetailsFragment"
+            app:destination="@id/videoDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/videoDetailsFragment"
+        android:name="com.github.ParagonVirtuoso.memorias.presentation.video.VideoDetailsFragment"
+        android:label="VideoDetailsFragment">
+        <argument
+            android:name="video"
+            app:argType="com.github.ParagonVirtuoso.memorias.domain.model.Video" />
+    </fragment>
 
 </navigation> 
