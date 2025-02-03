@@ -115,6 +115,34 @@
                         app:iconPadding="@dimen/icon_padding"
                         app:iconSize="@dimen/icon_size_default" />
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPlaylists"
+                        style="@style/Widget.Material3.Button.ElevatedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spacing_huge"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:text="Minhas Playlists"
+                        android:textSize="@dimen/text_body1"
+                        app:cornerRadius="@dimen/button_corner_radius"
+                        app:icon="@drawable/ic_playlist_add"
+                        app:iconGravity="textStart"
+                        app:iconPadding="@dimen/icon_padding"
+                        app:iconSize="@dimen/icon_size_default" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnFavorites"
+                        style="@style/Widget.Material3.Button.ElevatedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spacing_huge"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:text="Vídeos Favoritos"
+                        android:textSize="@dimen/text_body1"
+                        app:cornerRadius="@dimen/button_corner_radius"
+                        app:icon="@drawable/ic_favorite_border"
+                        app:iconGravity="textStart"
+                        app:iconPadding="@dimen/icon_padding"
+                        app:iconSize="@dimen/icon_size_default" />
+
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>

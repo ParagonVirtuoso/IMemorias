@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.github.ParagonVirtuoso.memorias.databinding.FragmentPlaylistDetailsBinding
 import com.github.ParagonVirtuoso.memorias.presentation.search.VideoAdapter
 import com.github.ParagonVirtuoso.memorias.util.showErrorSnackbar
-import com.github.ParagonVirtuoso.memorias.util.showSuccessSnackbar
+import com.github.ParagonVirtuoso.memorias.util.showInfoSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
