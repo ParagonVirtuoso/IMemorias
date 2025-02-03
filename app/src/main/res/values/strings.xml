@@ -29,6 +29,7 @@
     <string name="loading">Carregando…</string>
     <string name="toggle_theme">Alternar tema</string>
     <string name="search_hint">Buscar vídeos no YouTube</string>
+    <string name="edit">Editar</string>
 
     <!-- Home Screen -->
     <string name="home_description">Organize e reviva seus momentos especiais através de vídeos do YouTube</string>
@@ -40,7 +41,7 @@
 
     <!-- Error Messages -->
     <string name="error_403">Não foi possível acessar o YouTube. Por favor, verifique sua chave de API.</string>
-
+    <string name="error_unexpected_state">Estado inesperado encontrado.</string>
     <!-- Dialog -->
     <string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
@@ -63,4 +64,58 @@
     <string name="video_duration">Duração: %1$s</string>
     <string name="video_views">%1$s visualizações</string>
     <string name="video_published_at">Publicado em %1$s</string>
+
+    <!-- Playlist -->
+    <string name="playlist_empty_state">Esta playlist está vazia.\nAdicione vídeos a ela!</string>
+    <string name="loading_playlist_videos">Carregando vídeos da playlist...</string>
+    <string name="playlist_options">Opções da playlist</string>
+    
+    <!-- Video -->
+    <string name="error_no_internet_playback">Não é possível reproduzir vídeos sem conexão com a internet.</string>
+    <string name="checking_connection">Verificando conexão...</string>
+    <string name="error_video_playback">Ocorreu um erro ao tentar reproduzir o vídeo.</string>
+    <string name="video_added_to_playlist">Vídeo adicionado à playlist com sucesso!</string>
+    <string name="video_added_to_favorites">Vídeo adicionado aos favoritos</string>
+    <string name="video_removed_from_favorites">Vídeo removido dos favoritos</string>
+    <string name="manage_playlists">Gerenciar playlists</string>
+    <string name="create_new_playlist">+ Criar nova playlist</string>
+    <string name="remove_from_playlist">Remover da playlist</string>
+    <string name="remove_video_from_playlist_confirmation">Deseja remover este vídeo da playlist \'%1$s\'?</string>
+    <string name="remove">Remover</string>
+    <string name="create_playlist">Criar nova playlist</string>
+    <string name="create">Criar</string>
+    <string name="error_empty_playlist_name">O nome da playlist não pode estar vazio</string>
+    
+    <!-- Repository -->
+    <string name="error_updating_video">Error updating video with ID \'%1$s\': %2$s</string>
+
+    <!-- Network -->
+    <string name="error_no_internet">Sem conexão com a internet. Por favor, verifique sua conexão e tente novamente.</string>
+    <string name="error_no_internet_video">Sem conexão com a internet. Para reproduzir vídeos é necessário estar conectado à internet.</string>
+    <string name="error_check_connection">Erro ao verificar conexão. %1$s</string>
+    <string name="error_video_not_found">Vídeo não encontrado</string>
+    <string name="error_unknown_with_message">Erro desconhecido: %1$s</string>
+
+    <!-- Authentication -->
+    <string name="error_login">Erro ao fazer login</string>
+    <string name="error_auth_check">Erro ao verificar autenticação</string>
+    <string name="error_user_not_authenticated">Usuário não autenticado</string>
+
+    <!-- Playlists -->
+    <string name="playlist_created">Playlist criada com sucesso!</string>
+    <string name="edit_playlist">Editar playlist</string>
+    <string name="save">Salvar</string>
+    <string name="delete_playlist">Excluir playlist</string>
+    <string name="delete_playlist_confirmation">Tem certeza que deseja excluir a playlist \'%1$s\'?</string>
+    <string name="delete">Excluir</string>
+    <string name="error_open_playlist">Erro ao abrir playlist: %1$s</string>
+    <string name="error_load_playlists">Erro ao carregar playlists</string>
+    <string name="error_create_playlist">Erro ao criar playlist</string>
+
+    <!-- Favorites -->
+    <string name="error_load_favorites">Erro ao carregar favoritos</string>
+    <string name="error_update_favorite">Erro ao atualizar favorito</string>
+
+    <!-- Coming Soon -->
+    <string name="coming_soon">Em breve!</string>
 </resources>

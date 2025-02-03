@@ -12,7 +12,6 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,7 +23,6 @@ import com.github.ParagonVirtuoso.memorias.util.showSuccessSnackbar
 import com.github.ParagonVirtuoso.memorias.util.showErrorSnackbar
 import com.github.ParagonVirtuoso.memorias.util.showInfoSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -105,22 +103,22 @@ class VideoDetailsFragment : Fragment() {
                         binding.youtubePlayerView.isVisible = false
                         binding.offlineMessage.apply {
                             isVisible = true
-                            text = "Não é possível reproduzir vídeos sem conexão com a internet."
+                            text = getString(R.string.error_no_internet_playback)
                         }
                     }
                     is VideoResult.Loading -> {
-                        binding.root.showInfoSnackbar("Verificando conexão...")
+                        binding.root.showInfoSnackbar(getString(R.string.checking_connection))
                     }
                     is VideoResult.Initial -> {
                         initializePlayer()
                     }
                 }
             } catch (e: Exception) {
-                binding.root.showErrorSnackbar("Erro ao verificar conexão. ${e.message}")
+                binding.root.showErrorSnackbar(getString(R.string.error_check_connection, e.message))
                 binding.youtubePlayerView.isVisible = false
                 binding.offlineMessage.apply {
                     isVisible = true
-                    text = "Ocorreu um erro ao tentar reproduzir o vídeo."
+                    text = getString(R.string.error_video_playback)
                 }
             }
         }
@@ -139,7 +137,7 @@ class VideoDetailsFragment : Fragment() {
             viewModel.uiState.collectLatest { state ->
                 when (state) {
                     is VideoDetailsUiState.VideoAddedToPlaylist -> {
-                        showMessage("Vídeo adicionado à playlist com sucesso!")
+                        showMessage(getString(R.string.video_added_to_playlist))
                     }
                     is VideoDetailsUiState.FavoriteToggled -> {
                         val menuItem = binding.toolbar.menu.findItem(R.id.action_favorite)
@@ -148,12 +146,21 @@ class VideoDetailsFragment : Fragment() {
                             else R.drawable.ic_favorite_border
                         )
                         showMessage(
-                            if (state.isFavorite) "Vídeo adicionado aos favoritos"
-                            else "Vídeo removido dos favoritos"
+                            if (state.isFavorite) getString(R.string.video_added_to_favorites)
+                            else getString(R.string.video_removed_from_favorites)
                         )
                     }
                     is VideoDetailsUiState.Error -> {
                         showError(state.message)
+                    }
+                    is VideoDetailsUiState.Loading -> {
+                        // TODO: Show loading indicator
+                    }
+                    is VideoDetailsUiState.Success -> {
+                        // TODO: Update UI with video details
+                    }
+                    is VideoDetailsUiState.Initial -> {
+                        // TODO: Add initial state
                     }
                 }
             }
@@ -177,10 +184,10 @@ class VideoDetailsFragment : Fragment() {
                             playlistStatus.playlist.name
                         }
                     }.toMutableList()
-                    items.add("+ Criar nova playlist")
+                    items.add(getString(R.string.create_new_playlist))
 
                     MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("Gerenciar playlists")
+                        .setTitle(getString(R.string.manage_playlists))
                         .setItems(items.toTypedArray()) { _, which ->
                             if (which == items.size - 1) {
                                 showCreatePlaylistDialog()
@@ -196,7 +203,7 @@ class VideoDetailsFragment : Fragment() {
                         .show()
                 }
                 is VideoDetailsUiState.Loading -> {
-                    binding.root.showInfoSnackbar("Carregando playlists...")
+                    binding.root.showInfoSnackbar(getString(R.string.loading_playlist_videos))
                 }
                 is VideoDetailsUiState.Error -> {
                     binding.root.showErrorSnackbar(state.message)
@@ -210,12 +217,12 @@ class VideoDetailsFragment : Fragment() {
 
     private fun showRemoveFromPlaylistConfirmation(playlist: Playlist) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Remover da playlist")
-            .setMessage("Deseja remover este vídeo da playlist '${playlist.name}'?")
-            .setPositiveButton("Remover") { _, _ ->
+            .setTitle(getString(R.string.remove_from_playlist))
+            .setMessage(getString(R.string.remove_video_from_playlist_confirmation, playlist.name))
+            .setPositiveButton(getString(R.string.remove)) { _, _ ->
                 viewModel.removeFromPlaylist(playlist)
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
 
@@ -226,19 +233,19 @@ class VideoDetailsFragment : Fragment() {
         val descriptionEditText = dialogView.findViewById<EditText>(R.id.descriptionEditText)
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Criar nova playlist")
+            .setTitle(getString(R.string.create_playlist))
             .setView(dialogView)
-            .setPositiveButton("Criar") { _, _ ->
+            .setPositiveButton(getString(R.string.create)) { _, _ ->
                 val name = nameEditText.text.toString()
                 val description = descriptionEditText.text.toString()
                 
                 if (name.isNotBlank()) {
                     viewModel.createPlaylist(name, description)
                 } else {
-                    showError("O nome da playlist não pode estar vazio")
+                    showError(getString(R.string.error_empty_playlist_name))
                 }
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
 
@@ -279,4 +286,4 @@ class VideoDetailsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-} 
+}
