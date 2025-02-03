@@ -69,6 +69,7 @@
     <string name="playlist_empty_state">Esta playlist está vazia.\nAdicione vídeos a ela!</string>
     <string name="loading_playlist_videos">Carregando vídeos da playlist...</string>
     <string name="playlist_options">Opções da playlist</string>
+    <string name="playlist_item_with_check">%1$s ✓</string>
     
     <!-- Video -->
     <string name="error_no_internet_playback">Não é possível reproduzir vídeos sem conexão com a internet.</string>

@@ -179,7 +179,7 @@ class VideoDetailsFragment : Fragment() {
 
                     val items = playlists.map { playlistStatus ->
                         if (playlistStatus.containsVideo) {
-                            "${playlistStatus.playlist.name} ✓"
+                            getString(R.string.playlist_item_with_check, playlistStatus.playlist.name)
                         } else {
                             playlistStatus.playlist.name
                         }
