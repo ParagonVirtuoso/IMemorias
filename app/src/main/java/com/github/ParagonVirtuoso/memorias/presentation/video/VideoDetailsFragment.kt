@@ -155,15 +155,6 @@ class VideoDetailsFragment : Fragment() {
                     is VideoDetailsUiState.Error -> {
                         showError(state.message)
                     }
-                    is VideoDetailsUiState.Loading -> {
-                        // Poderia mostrar um loading se necessário
-                    }
-                    is VideoDetailsUiState.Success -> {
-                        // Estado atualizado com sucesso, não precisa fazer nada aqui
-                    }
-                    is VideoDetailsUiState.Initial -> {
-                        // Estado inicial, não precisa fazer nada aqui
-                    }
                 }
             }
         }
