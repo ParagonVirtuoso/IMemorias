@@ -24,4 +24,9 @@
     <!-- Gradient Colors -->
     <color name="gradient_start">#9683EC</color>
     <color name="gradient_end">#6A5ACD</color>
+
+    <!-- Snackbar Colors -->
+    <color name="success_color">#4CAF50</color>
+    <color name="error_color">#F44336</color>
+    <color name="info_color">#2196F3</color>
 </resources>
