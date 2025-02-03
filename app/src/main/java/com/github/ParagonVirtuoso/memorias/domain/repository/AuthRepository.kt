@@ -8,4 +8,5 @@ interface AuthRepository {
     suspend fun signOut()
     fun getCurrentUser(): Flow<User?>
     fun isUserAuthenticated(): Flow<Boolean>
+    suspend fun clearLocalData()
 } 

@@ -39,9 +39,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 authRepository.signOut()
-                _uiState.value = HomeUiState.SignedOut
+                _uiState.value = HomeUiState.SignedOut("Logout realizado com sucesso. Todos os dados locais foram limpos.")
             } catch (e: Exception) {
-                _uiState.value = HomeUiState.Error(e.message ?: "Erro ao fazer logout")
+                _uiState.value = HomeUiState.Error("Erro ao fazer logout: ${e.message}")
             }
         }
     }
@@ -60,5 +60,5 @@ class HomeViewModel @Inject constructor(
 sealed class HomeUiState {
     data class Welcome(val userName: String) : HomeUiState()
     data class Error(val message: String) : HomeUiState()
-    object SignedOut : HomeUiState()
+    data class SignedOut(val message: String) : HomeUiState()
 } 

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.github.ParagonVirtuoso.memorias.presentation.splash.SplashFragment"
-        android:label="SplashFragment">
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splashFragment_to_authFragment"
+            android:id="@+id/action_splash_to_auth"
             app:destination="@id/authFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashFragment_to_homeFragment"
+            android:id="@+id/action_splash_to_home"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
@@ -23,9 +25,10 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.github.ParagonVirtuoso.memorias.presentation.auth.AuthFragment"
-        android:label="AuthFragment">
+        android:label="AuthFragment"
+        tools:layout="@layout/fragment_auth">
         <action
-            android:id="@+id/action_authFragment_to_homeFragment"
+            android:id="@+id/action_auth_to_home"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
@@ -34,49 +37,75 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.github.ParagonVirtuoso.memorias.presentation.home.HomeFragment"
-        android:label="HomeFragment">
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_searchFragment"
+            android:id="@+id/action_home_to_search"
             app:destination="@id/searchFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_authFragment"
-            app:destination="@id/authFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_home_to_playlist"
             app:destination="@id/playlistFragment" />
         <action
-            android:id="@+id/action_home_to_player"
-            app:destination="@id/playerFragment" />
+            android:id="@+id/action_home_to_favorites"
+            app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_home_to_auth"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
-
-    <fragment
-        android:id="@+id/playlistFragment"
-        android:name="com.github.ParagonVirtuoso.memorias.presentation.playlist.PlaylistFragment"
-        android:label="PlaylistFragment" />
-
-    <fragment
-        android:id="@+id/playerFragment"
-        android:name="com.github.ParagonVirtuoso.memorias.presentation.player.PlayerFragment"
-        android:label="PlayerFragment" />
 
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.github.ParagonVirtuoso.memorias.presentation.search.SearchFragment"
-        android:label="SearchFragment">
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
         <action
-            android:id="@+id/action_searchFragment_to_videoDetailsFragment"
+            android:id="@+id/action_search_to_video_details"
             app:destination="@id/videoDetailsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/videoDetailsFragment"
         android:name="com.github.ParagonVirtuoso.memorias.presentation.video.VideoDetailsFragment"
-        android:label="VideoDetailsFragment">
+        android:label="VideoDetailsFragment"
+        tools:layout="@layout/fragment_video_details">
         <argument
             android:name="video"
             app:argType="com.github.ParagonVirtuoso.memorias.domain.model.Video" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.github.ParagonVirtuoso.memorias.presentation.playlist.PlaylistFragment"
+        android:label="PlaylistFragment"
+        tools:layout="@layout/fragment_playlist">
+        <action
+            android:id="@+id/action_playlist_to_playlist_details"
+            app:destination="@id/playlistDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/playlistDetailsFragment"
+        android:name="com.github.ParagonVirtuoso.memorias.presentation.playlist.PlaylistDetailsFragment"
+        android:label="PlaylistDetailsFragment"
+        tools:layout="@layout/fragment_playlist_details">
+        <argument
+            android:name="playlist"
+            app:argType="com.github.ParagonVirtuoso.memorias.domain.model.Playlist" />
+        <action
+            android:id="@+id/action_playlist_details_to_video_details"
+            app:destination="@id/videoDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.github.ParagonVirtuoso.memorias.presentation.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favorite_to_video_details"
+            app:destination="@id/videoDetailsFragment" />
     </fragment>
 
 </navigation> 
