@@ -24,7 +24,9 @@ data class YoutubeVideo(
 
 data class VideoId(
     @SerializedName("videoId")
-    val videoId: String
+    val videoId: String?,
+    @SerializedName("kind")
+    val kind: String?
 )
 
 data class VideoSnippet(
