@@ -232,7 +232,7 @@ class HomeFragment : Fragment() {
         // TODO: Implementar navegação para a tela de adicionar memória
         Snackbar.make(
             binding.root,
-            "Em breve!",
+            getString(R.string.coming_soon),
             Snackbar.LENGTH_SHORT
         ).show()
     }

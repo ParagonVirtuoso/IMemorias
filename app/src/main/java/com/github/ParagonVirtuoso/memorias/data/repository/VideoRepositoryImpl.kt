@@ -3,6 +3,7 @@ package com.github.ParagonVirtuoso.memorias.data.repository
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.github.ParagonVirtuoso.memorias.R
 import com.github.ParagonVirtuoso.memorias.data.remote.api.YoutubeApi
 import com.github.ParagonVirtuoso.memorias.data.remote.model.YoutubeVideo
 import com.github.ParagonVirtuoso.memorias.domain.model.SearchParams
@@ -31,9 +32,9 @@ class VideoRepositoryImpl @Inject constructor(
             val videos = response.items.map { it.toDomainVideo() }
             emit(VideoResult.Success(videos))
         } catch (e: java.net.UnknownHostException) {
-            emit(VideoResult.Error("Sem conexão com a internet. Por favor, verifique sua conexão e tente novamente."))
+            emit(VideoResult.Error(context.getString(R.string.error_no_internet)))
         } catch (e: Exception) {
-            emit(VideoResult.Error(e.message ?: "Erro desconhecido"))
+            emit(VideoResult.Error(e.message ?: context.getString(R.string.error_unknown)))
         }
     }
 
@@ -43,17 +44,17 @@ class VideoRepositoryImpl @Inject constructor(
             val video = response.items.firstOrNull()?.toDomainVideo()
             video?.let { 
                 VideoResult.Success(listOf(it))
-            } ?: VideoResult.Error("Vídeo não encontrado")
+            } ?: VideoResult.Error(context.getString(R.string.error_video_not_found))
         } catch (e: java.net.UnknownHostException) {
-            VideoResult.Error("Sem conexão com a internet. Por favor, verifique sua conexão e tente novamente.")
+            VideoResult.Error(context.getString(R.string.error_no_internet))
         } catch (e: Exception) {
-            VideoResult.Error(e.message ?: "Erro desconhecido")
+            VideoResult.Error(e.message ?: context.getString(R.string.error_unknown))
         }
     }
 
     override suspend fun checkInternetForPlayback(): VideoResult {
         if (!isNetworkAvailable()) {
-            return VideoResult.Error("Sem conexão com a internet. Para reproduzir vídeos é necessário estar conectado à internet.")
+            return VideoResult.Error(context.getString(R.string.error_no_internet_video))
         }
         return VideoResult.Success(emptyList())
     }

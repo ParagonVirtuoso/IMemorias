@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.github.ParagonVirtuoso.memorias.R
 import com.github.ParagonVirtuoso.memorias.databinding.FragmentPlaylistDetailsBinding
 import com.github.ParagonVirtuoso.memorias.presentation.search.VideoAdapter
 import com.github.ParagonVirtuoso.memorias.util.showErrorSnackbar
@@ -83,10 +84,10 @@ class PlaylistDetailsFragment : Fragment() {
                     binding.root.showErrorSnackbar(state.message)
                 }
                 is PlaylistDetailsUiState.Empty -> {
-                    emptyStateTextView.text = "Esta playlist está vazia.\nAdicione vídeos a ela!"
+                    emptyStateTextView.text = getString(R.string.playlist_empty_state)
                 }
                 is PlaylistDetailsUiState.Loading -> {
-                    binding.root.showInfoSnackbar("Carregando vídeos da playlist...")
+                    binding.root.showInfoSnackbar(getString(R.string.loading_playlist_videos))
                 }
             }
         }

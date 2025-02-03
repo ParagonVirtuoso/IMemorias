@@ -86,7 +86,7 @@ class PlaylistFragment : Fragment() {
             when (state) {
                 is PlaylistUiState.Success -> playlistAdapter.submitList(state.playlists)
                 is PlaylistUiState.Error -> binding.root.showErrorSnackbar(state.message)
-                is PlaylistUiState.PlaylistCreated -> binding.root.showSuccessSnackbar("Playlist criada com sucesso!")
+                is PlaylistUiState.PlaylistCreated -> binding.root.showSuccessSnackbar(getString(R.string.playlist_created))
                 else -> Unit
             }
         }
@@ -99,26 +99,26 @@ class PlaylistFragment : Fragment() {
         val descriptionEditText = dialogView.findViewById<EditText>(R.id.descriptionEditText)
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Criar nova playlist")
+            .setTitle(getString(R.string.create_playlist))
             .setView(dialogView)
-            .setPositiveButton("Criar") { _, _ ->
+            .setPositiveButton(getString(R.string.create)) { _, _ ->
                 val name = nameEditText.text.toString()
                 val description = descriptionEditText.text.toString()
                 
                 if (name.isNotBlank()) {
                     viewModel.createPlaylist(name, description)
                 } else {
-                    showError("O nome da playlist não pode estar vazio")
+                    showError(getString(R.string.error_empty_playlist_name))
                 }
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
 
     private fun showPlaylistOptionsDialog(playlist: Playlist) {
-        val options = arrayOf("Editar", "Excluir")
+        val options = arrayOf(getString(R.string.edit), getString(R.string.delete))
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Opções da playlist")
+            .setTitle(getString(R.string.playlist_options))
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> showEditPlaylistDialog(playlist)
@@ -139,9 +139,9 @@ class PlaylistFragment : Fragment() {
         descriptionEditText.setText(playlist.description)
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Editar playlist")
+            .setTitle(getString(R.string.edit_playlist))
             .setView(dialogView)
-            .setPositiveButton("Salvar") { _, _ ->
+            .setPositiveButton(getString(R.string.save)) { _, _ ->
                 val name = nameEditText.text?.toString()?.trim()
                 val description = descriptionEditText.text?.toString()?.trim()
 
@@ -151,21 +151,21 @@ class PlaylistFragment : Fragment() {
                         description = description.orEmpty()
                     ))
                 } else {
-                    showError("O nome da playlist não pode estar vazio")
+                    showError(getString(R.string.error_empty_playlist_name))
                 }
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
 
     private fun showDeletePlaylistConfirmation(playlist: Playlist) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Excluir playlist")
-            .setMessage("Tem certeza que deseja excluir a playlist '${playlist.name}'?")
-            .setPositiveButton("Excluir") { _, _ ->
+            .setTitle(getString(R.string.delete_playlist))
+            .setMessage(getString(R.string.delete_playlist_confirmation, playlist.name))
+            .setPositiveButton(getString(R.string.delete)) { _, _ ->
                 viewModel.deletePlaylist(playlist)
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton(getString(R.string.cancel), null)
             .show()
     }
 
@@ -174,7 +174,7 @@ class PlaylistFragment : Fragment() {
             val action = PlaylistFragmentDirections.actionPlaylistToPlaylistDetails(playlist)
             findNavController().navigate(action)
         } catch (e: Exception) {
-            binding.root.showErrorSnackbar("Erro ao abrir playlist: ${e.message}")
+            binding.root.showErrorSnackbar(getString(R.string.error_open_playlist, e.message))
         }
     }
 
