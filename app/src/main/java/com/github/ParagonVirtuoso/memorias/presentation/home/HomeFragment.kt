@@ -15,6 +15,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.ParagonVirtuoso.memorias.R
 import com.github.ParagonVirtuoso.memorias.databinding.FragmentHomeBinding
+import com.github.ParagonVirtuoso.memorias.util.showErrorSnackbar
+import com.github.ParagonVirtuoso.memorias.util.showSuccessSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +43,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setupMenu()
-        observeViewModel()
+        observeUiState()
     }
 
     private fun setupMenu() {
@@ -69,6 +71,8 @@ class HomeFragment : Fragment() {
     private fun setupViews() {
         with(binding) {
             btnSearch.setOnClickListener { navigateToSearch() }
+            btnPlaylists.setOnClickListener { navigateToPlaylists() }
+            btnFavorites.setOnClickListener { navigateToFavorites() }
             fabMenu.setOnClickListener { toggleMenu() }
             fabAddMemory.setOnClickListener { navigateToAddMemory() }
             fabSignOut.setOnClickListener { showSignOutConfirmation() }
@@ -185,35 +189,22 @@ class HomeFragment : Fragment() {
             .show()
     }
 
-    private fun observeViewModel() {
+    private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->
-                handleUiState(state)
+                when (state) {
+                    is HomeUiState.Welcome -> {
+                        binding.tvWelcome.text = getString(R.string.welcome_message, state.userName)
+                    }
+                    is HomeUiState.Error -> {
+                        binding.root.showErrorSnackbar(state.message)
+                    }
+                    is HomeUiState.SignedOut -> {
+                        binding.root.showSuccessSnackbar(state.message)
+                        findNavController().navigate(R.id.action_home_to_auth)
+                    }
+                }
             }
-        }
-    }
-
-    private fun handleUiState(state: HomeUiState) {
-        when (state) {
-            is HomeUiState.Welcome -> showWelcomeMessage(state.userName)
-            is HomeUiState.Error -> showError(state.message)
-            HomeUiState.SignedOut -> navigateToAuth()
-        }
-    }
-
-    private fun showWelcomeMessage(userName: String) {
-        binding.tvWelcome.text = getString(R.string.welcome_message, userName)
-    }
-
-    private fun showError(message: String) {
-        Snackbar.make(
-            binding.root,
-            message,
-            Snackbar.LENGTH_LONG
-        ).apply {
-            setAction("OK") { dismiss() }
-            setActionTextColor(resources.getColor(android.R.color.white, null))
-            show()
         }
     }
 
@@ -222,12 +213,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToAuth() {
-        findNavController().navigate(R.id.action_homeFragment_to_authFragment)
+        findNavController().navigate(R.id.action_home_to_auth)
     }
 
     private fun navigateToSearch() {
         try {
-            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+            findNavController().navigate(R.id.action_home_to_search)
         } catch (e: Exception) {
             if (e.message?.contains("403") == true) {
                 showError(getString(R.string.error_403))
@@ -244,6 +235,26 @@ class HomeFragment : Fragment() {
             "Em breve!",
             Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+    private fun navigateToPlaylists() {
+        try {
+            findNavController().navigate(R.id.action_home_to_playlist)
+        } catch (e: Exception) {
+            showError(getString(R.string.error_unknown))
+        }
+    }
+
+    private fun navigateToFavorites() {
+        try {
+            findNavController().navigate(R.id.action_home_to_favorites)
+        } catch (e: Exception) {
+            showError(getString(R.string.error_unknown))
+        }
+    }
+
+    private fun showError(message: String) {
+        binding.root.showErrorSnackbar(message)
     }
 
     override fun onDestroyView() {

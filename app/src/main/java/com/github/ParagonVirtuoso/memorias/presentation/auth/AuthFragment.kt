@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.github.ParagonVirtuoso.memorias.R
 import com.github.ParagonVirtuoso.memorias.databinding.FragmentAuthBinding
+import com.github.ParagonVirtuoso.memorias.util.showErrorSnackbar
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -22,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import android.view.animation.AlphaAnimation
+import com.google.android.material.snackbar.Snackbar
 
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
@@ -72,7 +73,7 @@ class AuthFragment : Fragment() {
         when (state) {
             is AuthState.Success -> {
                 hideLoading()
-                findNavController().navigate(R.id.action_authFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_auth_to_home)
             }
             is AuthState.Error -> {
                 showMessage(getString(R.string.auth_error, state.message))
@@ -101,7 +102,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        binding.root.showErrorSnackbar(message)
     }
 
     private fun toggleLoading(isLoading: Boolean) {

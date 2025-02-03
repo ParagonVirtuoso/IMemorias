@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.ParagonVirtuoso.memorias.R
 import com.github.ParagonVirtuoso.memorias.databinding.FragmentSearchBinding
 import com.github.ParagonVirtuoso.memorias.domain.model.VideoResult
+import com.github.ParagonVirtuoso.memorias.util.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -64,7 +65,11 @@ class SearchFragment : Fragment() {
             
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    query?.let { viewModel.searchVideos(it) }
+                    query?.let { 
+                        viewModel.searchVideos(it)
+                        binding.root.hideKeyboard()
+                        clearFocus()
+                    }
                     return true
                 }
 
@@ -87,7 +92,7 @@ class SearchFragment : Fragment() {
 
         videoAdapter.onItemClick = { video ->
             findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToVideoDetailsFragment(video)
+                SearchFragmentDirections.actionSearchToVideoDetails(video)
             )
         }
     }
