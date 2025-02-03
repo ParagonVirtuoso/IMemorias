@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface VideoRepository {
     fun searchVideos(params: SearchParams): Flow<VideoResult>
     suspend fun getVideoDetails(videoId: String): VideoResult
+    suspend fun checkInternetForPlayback(): VideoResult
 } 
