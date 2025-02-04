@@ -119,4 +119,28 @@
 
     <!-- Coming Soon -->
     <string name="coming_soon">Em breve!</string>
+
+    <!-- Memory Scheduler -->
+    <string name="schedule_memory_title">Agendar Memória</string>
+    <string name="select_date_time">Selecione a data e hora para receber a notificação</string>
+    <string name="select_date">Selecionar Data</string>
+    <string name="select_time">Selecionar Hora</string>
+    <string name="selected_date_time">Data e hora selecionadas: %1$s</string>
+    <string name="schedule">Agendar</string>
+    <string name="memory_scheduled">Memória agendada com sucesso!</string>
+    <string name="error_scheduling_memory">Erro ao agendar memória</string>
+    <string name="error_invalid_date">A data selecionada deve ser no futuro</string>
+    <string name="watch_later">Assistir Mais Tarde</string>
+    <string name="memory_scheduled_success">Memória agendada para %1$s</string>
+
+    <!-- Memórias -->
+    <string name="delete_memory">Excluir Memória</string>
+    <string name="delete_memory_confirmation">Tem certeza que deseja excluir esta memória?</string>
+    <string name="menu">Menu</string>
+
+    <!-- Notifications -->
+    <string name="memory_notification_channel_name">Memórias</string>
+    <string name="memory_notification_channel_description">Notificações de memórias agendadas</string>
+    <string name="memory_notification_title">Hora de Relembrar!</string>
+    <string name="memory_notification_text">Que tal assistir \"%1$s\" novamente?</string>
 </resources>
