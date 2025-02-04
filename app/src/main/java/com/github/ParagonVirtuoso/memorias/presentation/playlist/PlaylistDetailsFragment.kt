@@ -57,7 +57,11 @@ class PlaylistDetailsFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.recyclerView.adapter = videoAdapter
         videoAdapter.onItemClick = { video ->
-            val action = PlaylistDetailsFragmentDirections.actionPlaylistDetailsToVideoDetails(video)
+            val action = PlaylistDetailsFragmentDirections.actionPlaylistDetailsToVideoDetails(
+                videoId = video.id,
+                videoTitle = video.title,
+                videoThumbnail = video.thumbnailUrl
+            )
             findNavController().navigate(action)
         }
     }

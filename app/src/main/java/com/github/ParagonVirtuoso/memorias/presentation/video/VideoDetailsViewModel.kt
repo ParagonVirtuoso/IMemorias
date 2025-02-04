@@ -14,6 +14,7 @@ import com.github.ParagonVirtuoso.memorias.domain.usecase.favorite.ToggleFavorit
 import com.github.ParagonVirtuoso.memorias.domain.usecase.playlist.AddVideoToPlaylistUseCase
 import com.github.ParagonVirtuoso.memorias.domain.usecase.playlist.GetPlaylistsUseCase
 import com.github.ParagonVirtuoso.memorias.domain.usecase.playlist.CreatePlaylistUseCase
+import com.github.ParagonVirtuoso.memorias.domain.usecase.video.CheckInternetConnectionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -30,19 +31,36 @@ class VideoDetailsViewModel @Inject constructor(
     private val playlistRepository: PlaylistRepository,
     private val createPlaylistUseCase: CreatePlaylistUseCase,
     private val videoRepository: VideoRepository,
+    private val checkInternetConnectionUseCase: CheckInternetConnectionUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    private val video: Video = checkNotNull(savedStateHandle["video"])
 
     private val _uiState = MutableStateFlow<VideoDetailsUiState>(VideoDetailsUiState.Initial)
     val uiState: StateFlow<VideoDetailsUiState> = _uiState
 
+    private val _currentVideo = MutableStateFlow<Video?>(null)
+    val currentVideo: StateFlow<Video?> = _currentVideo
+
     init {
-        loadPlaylists()
+        savedStateHandle.get<String>("videoId")?.let { videoId ->
+            val videoTitle = savedStateHandle.get<String>("videoTitle") ?: ""
+            val videoThumbnail = savedStateHandle.get<String>("videoThumbnail") ?: ""
+            
+            val video = Video(
+                id = videoId,
+                title = videoTitle,
+                description = "",
+                thumbnailUrl = videoThumbnail,
+                channelTitle = "",
+                publishedAt = ""
+            )
+            
+            _currentVideo.value = video
+            loadPlaylists(video)
+        }
     }
 
-    private fun loadPlaylists() {
+    private fun loadPlaylists(video: Video) {
         viewModelScope.launch {
             try {
                 authRepository.getCurrentUser().collect { user ->
@@ -72,10 +90,10 @@ class VideoDetailsViewModel @Inject constructor(
     fun addToPlaylist(playlist: Playlist) {
         viewModelScope.launch {
             try {
-                addVideoToPlaylistUseCase(playlist.id, video)
+                addVideoToPlaylistUseCase(playlist.id, _currentVideo.value!!)
                 _uiState.value = VideoDetailsUiState.VideoAddedToPlaylist
                 delay(100)
-                loadPlaylists()
+                loadPlaylists(_currentVideo.value!!)
             } catch (e: Exception) {
                 _uiState.value = VideoDetailsUiState.Error(e.message ?: "Erro ao adicionar vídeo à playlist")
             }
@@ -85,8 +103,8 @@ class VideoDetailsViewModel @Inject constructor(
     fun removeFromPlaylist(playlist: Playlist) {
         viewModelScope.launch {
             try {
-                playlistRepository.removeVideoFromPlaylist(playlist.id, video.id)
-                loadPlaylists()
+                playlistRepository.removeVideoFromPlaylist(playlist.id, _currentVideo.value!!.id)
+                loadPlaylists(_currentVideo.value!!)
             } catch (e: Exception) {
                 _uiState.value = VideoDetailsUiState.Error(e.message ?: "Erro ao remover vídeo da playlist")
             }
@@ -98,8 +116,8 @@ class VideoDetailsViewModel @Inject constructor(
             try {
                 val user = authRepository.getCurrentUser().first()
                 if (user != null) {
-                    toggleFavoriteUseCase(user.id, video)
-                    val isFavorite = favoriteRepository.isFavorite(user.id, video.id)
+                    toggleFavoriteUseCase(user.id, _currentVideo.value!!)
+                    val isFavorite = favoriteRepository.isFavorite(user.id, _currentVideo.value!!.id)
                     _uiState.value = VideoDetailsUiState.FavoriteToggled(isFavorite)
                 }
             } catch (e: Exception) {
@@ -111,7 +129,7 @@ class VideoDetailsViewModel @Inject constructor(
     suspend fun isFavorite(): Boolean {
         val user = authRepository.getCurrentUser().first()
         return if (user != null) {
-            favoriteRepository.isFavorite(user.id, video.id)
+            favoriteRepository.isFavorite(user.id, _currentVideo.value!!.id)
         } else {
             false
         }
@@ -123,10 +141,10 @@ class VideoDetailsViewModel @Inject constructor(
                 val user = authRepository.getCurrentUser().first()
                 if (user != null) {
                     val playlistId = createPlaylistUseCase(name, description, user.id)
-                    addVideoToPlaylistUseCase(playlistId = playlistId, video = video)
+                    addVideoToPlaylistUseCase(playlistId = playlistId, video = _currentVideo.value!!)
                     _uiState.value = VideoDetailsUiState.VideoAddedToPlaylist
                     delay(100)
-                    loadPlaylists()
+                    loadPlaylists(_currentVideo.value!!)
                 } else {
                     _uiState.value = VideoDetailsUiState.Error("Usuário não autenticado")
                 }
@@ -137,7 +155,12 @@ class VideoDetailsViewModel @Inject constructor(
     }
 
     suspend fun checkInternetForPlayback(): VideoResult {
-        return videoRepository.checkInternetForPlayback()
+        return checkInternetConnectionUseCase()
+    }
+
+    fun setVideo(video: Video) {
+        _currentVideo.value = video
+        loadPlaylists(video)
     }
 }
 

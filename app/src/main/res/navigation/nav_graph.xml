@@ -5,6 +5,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
+    <action
+        android:id="@+id/action_global_video_details"
+        app:destination="@id/videoDetailsFragment" />
+
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.github.ParagonVirtuoso.memorias.presentation.splash.SplashFragment"
@@ -71,8 +75,17 @@
         android:label="VideoDetailsFragment"
         tools:layout="@layout/fragment_video_details">
         <argument
-            android:name="video"
-            app:argType="com.github.ParagonVirtuoso.memorias.domain.model.Video" />
+            android:name="videoId"
+            app:argType="string" />
+        <argument
+            android:name="videoTitle"
+            app:argType="string" />
+        <argument
+            android:name="videoThumbnail"
+            app:argType="string" />
+        <deepLink
+            android:id="@+id/deeplink_video_details"
+            app:uri="imemorias://video/{videoId}/{videoTitle}/{videoThumbnail}" />
     </fragment>
 
     <fragment
@@ -107,5 +120,11 @@
             android:id="@+id/action_favorite_to_video_details"
             app:destination="@id/videoDetailsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/memoriesFragment"
+        android:name="com.github.ParagonVirtuoso.memorias.presentation.memory.MemoriesFragment"
+        android:label="Minhas Memórias"
+        tools:layout="@layout/fragment_memories" />
 
 </navigation> 

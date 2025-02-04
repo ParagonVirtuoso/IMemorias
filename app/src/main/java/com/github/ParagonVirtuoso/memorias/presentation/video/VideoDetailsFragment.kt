@@ -18,7 +18,9 @@ import androidx.navigation.fragment.navArgs
 import com.github.ParagonVirtuoso.memorias.R
 import com.github.ParagonVirtuoso.memorias.databinding.FragmentVideoDetailsBinding
 import com.github.ParagonVirtuoso.memorias.domain.model.Playlist
+import com.github.ParagonVirtuoso.memorias.domain.model.Video
 import com.github.ParagonVirtuoso.memorias.domain.model.VideoResult
+import com.github.ParagonVirtuoso.memorias.presentation.memory.MemorySchedulerDialog
 import com.github.ParagonVirtuoso.memorias.util.showSuccessSnackbar
 import com.github.ParagonVirtuoso.memorias.util.showErrorSnackbar
 import com.github.ParagonVirtuoso.memorias.util.showInfoSnackbar
@@ -29,6 +31,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
+import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class VideoDetailsFragment : Fragment() {
@@ -55,11 +61,12 @@ class VideoDetailsFragment : Fragment() {
         setupVideoPlayer()
         observeUiState()
         checkInitialFavoriteState()
+        setupViews()
     }
 
     private fun setupToolbar() {
         binding.toolbar.apply {
-            title = args.video.title
+            title = args.videoTitle
             setNavigationOnClickListener {
                 findNavController().navigateUp()
             }
@@ -81,13 +88,27 @@ class VideoDetailsFragment : Fragment() {
     }
 
     private fun setupVideoDetails() {
-        val video = args.video
+        val videoId = args.videoId
+        val videoTitle = args.videoTitle
+        val videoThumbnail = args.videoThumbnail
+        
+        val video = Video(
+            id = videoId,
+            title = videoTitle,
+            description = "",
+            thumbnailUrl = videoThumbnail,
+            channelTitle = "",
+            publishedAt = ""
+        )
+
         binding.apply {
-            toolbar.title = video.title
-            titleTextView.text = video.title
-            descriptionTextView.text = video.description
-            channelTextView.text = video.channelTitle
+            toolbar.title = videoTitle
+            titleTextView.text = videoTitle
+            descriptionTextView.text = ""
+            channelTextView.text = ""
         }
+
+        viewModel.setVideo(video)
     }
 
     private fun setupVideoPlayer() {
@@ -127,7 +148,7 @@ class VideoDetailsFragment : Fragment() {
     private fun initializePlayer() {
         binding.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(args.video.id, 0f)
+                youTubePlayer.loadVideo(args.videoId, 0f)
             }
         })
     }
@@ -179,7 +200,7 @@ class VideoDetailsFragment : Fragment() {
 
                     val items = playlists.map { playlistStatus ->
                         if (playlistStatus.containsVideo) {
-                            "${playlistStatus.playlist.name} ✓"
+                            getString(R.string.playlist_item_with_check, playlistStatus.playlist.name)
                         } else {
                             playlistStatus.playlist.name
                         }
@@ -280,6 +301,36 @@ class VideoDetailsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             updateFavoriteIcon()
         }
+    }
+
+    private fun setupViews() {
+        binding.btnWatchLater.setOnClickListener {
+            showMemorySchedulerDialog()
+        }
+    }
+
+    private fun showMemorySchedulerDialog() {
+        val videoId = args.videoId
+        val videoTitle = binding.titleTextView.text.toString()
+        val videoThumbnail = args.videoThumbnail
+
+        MemorySchedulerDialog.newInstance(
+            videoId = videoId,
+            videoTitle = videoTitle,
+            videoThumbnail = videoThumbnail,
+            onScheduleCallback = { timestamp ->
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.memory_scheduled_success, formatDateTime(timestamp)),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        ).show(childFragmentManager, MemorySchedulerDialog.TAG)
+    }
+
+    private fun formatDateTime(timestamp: Long): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy 'às' HH:mm", Locale("pt", "BR"))
+        return dateFormat.format(Date(timestamp))
     }
 
     override fun onDestroyView() {
