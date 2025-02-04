@@ -50,7 +50,11 @@ class FavoriteFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.recyclerView.adapter = videoAdapter
         videoAdapter.onItemClick = { video ->
-            val action = FavoriteFragmentDirections.actionFavoriteToVideoDetails(video)
+            val action = FavoriteFragmentDirections.actionFavoriteToVideoDetails(
+                videoId = video.id,
+                videoTitle = video.title,
+                videoThumbnail = video.thumbnailUrl
+            )
             findNavController().navigate(action)
         }
     }

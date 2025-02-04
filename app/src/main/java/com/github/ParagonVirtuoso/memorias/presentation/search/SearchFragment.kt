@@ -91,9 +91,12 @@ class SearchFragment : Fragment() {
         }
 
         videoAdapter.onItemClick = { video ->
-            findNavController().navigate(
-                SearchFragmentDirections.actionSearchToVideoDetails(video)
+            val action = SearchFragmentDirections.actionSearchToVideoDetails(
+                videoId = video.id,
+                videoTitle = video.title,
+                videoThumbnail = video.thumbnailUrl
             )
+            findNavController().navigate(action)
         }
     }
 
