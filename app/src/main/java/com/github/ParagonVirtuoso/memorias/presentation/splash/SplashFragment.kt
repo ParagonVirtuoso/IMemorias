@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.github.ParagonVirtuoso.memorias.R
 import com.github.ParagonVirtuoso.memorias.databinding.FragmentSplashBinding
 import com.github.ParagonVirtuoso.memorias.util.showErrorSnackbar
+import com.github.ParagonVirtuoso.memorias.worker.MemoryNotificationWorker
+import com.github.ParagonVirtuoso.memorias.NavGraphDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -41,7 +43,7 @@ class SplashFragment : Fragment() {
             viewModel.splashState.collect { state ->
                 when (state) {
                     is SplashState.Loading -> Unit
-                    is SplashState.Authenticated -> navigateToHome()
+                    is SplashState.Authenticated -> checkDeepLinkAndNavigate()
                     is SplashState.Unauthenticated -> navigateToAuth()
                     is SplashState.Error -> showError(state.message)
                 }
@@ -49,9 +51,24 @@ class SplashFragment : Fragment() {
         }
     }
 
-    private suspend fun navigateToHome() {
+    private suspend fun checkDeepLinkAndNavigate() {
         delay(1500)
-        findNavController().navigate(R.id.action_splash_to_home)
+        activity?.intent?.let { intent ->
+            val videoId = intent.getStringExtra(MemoryNotificationWorker.KEY_VIDEO_ID)
+            val videoTitle = intent.getStringExtra(MemoryNotificationWorker.KEY_VIDEO_TITLE)
+            val videoThumbnail = intent.getStringExtra(MemoryNotificationWorker.KEY_VIDEO_THUMBNAIL)
+
+            if (videoId != null && videoTitle != null && videoThumbnail != null) {
+                val action = NavGraphDirections.actionGlobalVideoDetails(
+                    videoId = videoId,
+                    videoTitle = videoTitle,
+                    videoThumbnail = videoThumbnail
+                )
+                findNavController().navigate(action)
+            } else {
+                findNavController().navigate(R.id.action_splash_to_home)
+            }
+        } ?: findNavController().navigate(R.id.action_splash_to_home)
     }
 
     private suspend fun navigateToAuth() {
