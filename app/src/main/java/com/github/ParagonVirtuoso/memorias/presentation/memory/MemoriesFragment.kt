@@ -112,7 +112,7 @@ class MemoriesFragment : Fragment() {
                 viewModel.updateMemory(updatedMemory)
                 showSuccessMessage(timestamp)
             }
-        ).show(childFragmentManager, MemorySchedulerDialog.TAG)
+        ).show(childFragmentManager, null)
     }
 
     private fun showSuccessMessage(timestamp: Long) {

@@ -76,6 +76,7 @@ class HomeFragment : Fragment() {
             fabMenu.setOnClickListener { toggleMenu() }
             fabAddMemory.setOnClickListener { navigateToAddMemory() }
             fabSignOut.setOnClickListener { showSignOutConfirmation() }
+            fabYoutubeTerms.setOnClickListener { navigateToYouTubeTerms() }
             
             (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         }
@@ -111,6 +112,7 @@ class HomeFragment : Fragment() {
 
             fabAddMemory.visibility = View.VISIBLE
             fabSignOut.visibility = View.VISIBLE
+            fabYoutubeTerms.visibility = View.VISIBLE
             
             fabAddMemory.alpha = 0f
             fabAddMemory.scaleX = 0f
@@ -120,6 +122,10 @@ class HomeFragment : Fragment() {
             fabSignOut.scaleX = 0f
             fabSignOut.scaleY = 0f
 
+            fabYoutubeTerms.alpha = 0f
+            fabYoutubeTerms.scaleX = 0f
+            fabYoutubeTerms.scaleY = 0f
+
             val animatorSet = AnimatorSet().apply {
                 playTogether(
                     ObjectAnimator.ofFloat(fabAddMemory, "alpha", 0f, 1f),
@@ -127,7 +133,10 @@ class HomeFragment : Fragment() {
                     ObjectAnimator.ofFloat(fabAddMemory, "scaleY", 0f, 1f),
                     ObjectAnimator.ofFloat(fabSignOut, "alpha", 0f, 1f),
                     ObjectAnimator.ofFloat(fabSignOut, "scaleX", 0f, 1f),
-                    ObjectAnimator.ofFloat(fabSignOut, "scaleY", 0f, 1f)
+                    ObjectAnimator.ofFloat(fabSignOut, "scaleY", 0f, 1f),
+                    ObjectAnimator.ofFloat(fabYoutubeTerms, "alpha", 0f, 1f),
+                    ObjectAnimator.ofFloat(fabYoutubeTerms, "scaleX", 0f, 1f),
+                    ObjectAnimator.ofFloat(fabYoutubeTerms, "scaleY", 0f, 1f)
                 )
                 duration = 300
                 interpolator = OvershootInterpolator()
@@ -172,6 +181,16 @@ class HomeFragment : Fragment() {
                 .setDuration(300)
                 .withEndAction {
                     fabSignOut.visibility = View.GONE
+                }
+                .start()
+
+            fabYoutubeTerms.animate()
+                .alpha(0f)
+                .scaleX(0f)
+                .scaleY(0f)
+                .setDuration(300)
+                .withEndAction {
+                    fabYoutubeTerms.visibility = View.GONE
                 }
                 .start()
         }
@@ -248,6 +267,14 @@ class HomeFragment : Fragment() {
     private fun navigateToFavorites() {
         try {
             findNavController().navigate(R.id.action_home_to_favorites)
+        } catch (e: Exception) {
+            showError(getString(R.string.error_unknown))
+        }
+    }
+
+    private fun navigateToYouTubeTerms() {
+        try {
+            findNavController().navigate(R.id.action_home_to_youtube_terms)
         } catch (e: Exception) {
             showError(getString(R.string.error_unknown))
         }

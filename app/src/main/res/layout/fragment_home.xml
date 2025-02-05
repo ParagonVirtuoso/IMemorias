@@ -200,6 +200,38 @@
         android:orientation="vertical"
         android:gravity="bottom">
 
+        <!-- FAB Nova Memória (Ação Principal) -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabAddMemory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:text="@string/add_memory"
+            android:textSize="@dimen/text_body1"
+            android:visibility="gone"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:elevation="@dimen/elevation_default"
+            android:backgroundTint="@color/primary_light"
+            android:textColor="@color/on_primary"
+            app:icon="@drawable/ic_add"
+            app:iconTint="@color/on_primary" />
+
+        <!-- FAB Termos do YouTube -->
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabYoutubeTerms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:text="@string/youtube_terms"
+            android:textSize="@dimen/text_body1"
+            android:visibility="gone"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:elevation="@dimen/elevation_default"
+            android:backgroundTint="@color/surface"
+            android:textColor="@color/on_surface"
+            app:icon="@drawable/ic_info"
+            app:iconTint="@color/on_surface" />
+
         <!-- FAB Sair -->
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabSignOut"
@@ -215,22 +247,6 @@
             android:textColor="@color/on_surface"
             app:icon="@drawable/ic_logout"
             app:iconTint="@color/on_surface" />
-
-        <!-- FAB Nova Memória -->
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fabAddMemory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="@string/add_memory"
-            android:textSize="@dimen/text_body1"
-            android:visibility="gone"
-            app:cornerRadius="@dimen/button_corner_radius"
-            app:elevation="@dimen/elevation_default"
-            android:backgroundTint="@color/primary_light"
-            android:textColor="@color/on_primary"
-            app:icon="@drawable/ic_add"
-            app:iconTint="@color/on_primary" />
 
         <!-- FAB Menu Principal -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton

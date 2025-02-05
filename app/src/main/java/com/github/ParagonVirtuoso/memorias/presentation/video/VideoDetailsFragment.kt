@@ -310,22 +310,22 @@ class VideoDetailsFragment : Fragment() {
     }
 
     private fun showMemorySchedulerDialog() {
-        val videoId = args.videoId
-        val videoTitle = binding.titleTextView.text.toString()
-        val videoThumbnail = args.videoThumbnail
-
         MemorySchedulerDialog.newInstance(
-            videoId = videoId,
-            videoTitle = videoTitle,
-            videoThumbnail = videoThumbnail,
+            videoId = args.videoId,
+            videoTitle = args.videoTitle,
+            videoThumbnail = args.videoThumbnail,
             onScheduleCallback = { timestamp ->
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.memory_scheduled_success, formatDateTime(timestamp)),
-                    Snackbar.LENGTH_LONG
-                ).show()
+                showScheduledSuccessMessage(timestamp)
             }
-        ).show(childFragmentManager, MemorySchedulerDialog.TAG)
+        ).show(childFragmentManager, null)
+    }
+
+    private fun showScheduledSuccessMessage(timestamp: Long) {
+        Snackbar.make(
+            binding.root,
+            getString(R.string.memory_scheduled_success, formatDateTime(timestamp)),
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
     private fun formatDateTime(timestamp: Long): String {

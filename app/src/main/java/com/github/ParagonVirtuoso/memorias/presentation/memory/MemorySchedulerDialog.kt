@@ -148,6 +148,7 @@ class MemorySchedulerDialog : BottomSheetDialogFragment() {
                         showError(state.message)
                         viewModel.resetState()
                     }
+                    is MemorySchedulerState.Initial -> Unit
                 }
             }
         }
@@ -167,7 +168,6 @@ class MemorySchedulerDialog : BottomSheetDialogFragment() {
     }
 
     companion object {
-
         fun newInstance(
             videoId: String,
             videoTitle: String,

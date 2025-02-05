@@ -57,6 +57,13 @@
             app:destination="@id/authFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_home_to_youtube_terms"
+            app:destination="@id/youtubeTermsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -126,5 +133,11 @@
         android:name="com.github.ParagonVirtuoso.memorias.presentation.memory.MemoriesFragment"
         android:label="Minhas Memórias"
         tools:layout="@layout/fragment_memories" />
+
+    <fragment
+        android:id="@+id/youtubeTermsFragment"
+        android:name="com.github.ParagonVirtuoso.memorias.presentation.terms.YouTubeTermsFragment"
+        android:label="@string/youtube_terms"
+        tools:layout="@layout/fragment_youtube_terms" />
 
 </navigation> 
