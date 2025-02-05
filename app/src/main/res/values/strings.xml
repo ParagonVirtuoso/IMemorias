@@ -143,4 +143,7 @@
     <string name="memory_notification_channel_description">Notificações de memórias agendadas</string>
     <string name="memory_notification_title">Hora de Relembrar!</string>
     <string name="memory_notification_text">Que tal assistir \"%1$s\" novamente?</string>
+
+    <!-- YouTube Terms -->
+    <string name="youtube_terms">Termos de Uso do YouTube</string>
 </resources>
