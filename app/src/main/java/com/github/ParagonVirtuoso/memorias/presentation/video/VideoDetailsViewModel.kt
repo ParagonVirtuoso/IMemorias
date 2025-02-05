@@ -194,10 +194,18 @@ class VideoDetailsViewModel @Inject constructor(
                     _uiState.value = VideoDetailsUiState.Loading
                 }
 
-                val commentsPage = commentRepository.getVideoComments(
-                    videoId = video.id,
-                    pageToken = nextPageToken
-                )
+                val commentsPage = try {
+                    commentRepository.getVideoComments(
+                        videoId = video.id,
+                        pageToken = nextPageToken
+                    )
+                } catch (e: Exception) {
+                    isLoadingMoreComments = false
+                    if (refresh) {
+                        _uiState.value = VideoDetailsUiState.Error("Erro ao carregar comentários: ${e.message}")
+                    }
+                    return@launch
+                }
 
                 nextPageToken = commentsPage.nextPageToken
                 hasMoreComments = commentsPage.nextPageToken != null && commentsPage.comments.isNotEmpty()
@@ -224,7 +232,9 @@ class VideoDetailsViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                _uiState.value = VideoDetailsUiState.Error(e.message ?: "Erro ao carregar comentários")
+                if (refresh) {
+                    _uiState.value = VideoDetailsUiState.Error("Erro ao carregar comentários: ${e.message}")
+                }
             } finally {
                 isLoadingMoreComments = false
             }
