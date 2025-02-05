@@ -5,8 +5,10 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.net.toUri
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -83,19 +85,7 @@ class MemoryNotificationWorker @AssistedInject constructor(
     }
 
     private fun showNotification(videoId: String, videoTitle: String, videoThumbnail: String) {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra(KEY_VIDEO_ID, videoId)
-            putExtra(KEY_VIDEO_TITLE, videoTitle)
-            putExtra(KEY_VIDEO_THUMBNAIL, videoThumbnail)
-        }
-
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            videoId.hashCode(),
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
+        val intent = createPendingIntent(videoId, videoTitle, videoThumbnail)
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
@@ -105,15 +95,35 @@ class MemoryNotificationWorker @AssistedInject constructor(
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
+            .setContentIntent(intent)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
-            .setFullScreenIntent(pendingIntent, true)
+            .setFullScreenIntent(intent, true)
             .setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI)
             .build()
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationId = videoId.hashCode()
         notificationManager.notify(notificationId, notification)
+    }
+
+    private fun createPendingIntent(videoId: String, videoTitle: String, videoThumbnail: String): PendingIntent {
+        val deepLinkUri = "imemorias://video/$videoId/$videoTitle/$videoThumbnail".toUri()
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            deepLinkUri,
+            context,
+            MainActivity::class.java
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra("from_notification", true)
+        }
+
+        return PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
     }
 
     companion object {

@@ -2,6 +2,7 @@ package com.github.ParagonVirtuoso.memorias.di
 
 import android.content.Context
 import com.github.ParagonVirtuoso.memorias.data.remote.api.YoutubeApi
+import com.github.ParagonVirtuoso.memorias.data.remote.YoutubeService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -72,5 +73,11 @@ object NetworkModule {
     @Singleton
     fun provideYoutubeApi(retrofit: Retrofit): YoutubeApi {
         return retrofit.create(YoutubeApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideYoutubeService(retrofit: Retrofit): YoutubeService {
+        return retrofit.create(YoutubeService::class.java)
     }
 } 

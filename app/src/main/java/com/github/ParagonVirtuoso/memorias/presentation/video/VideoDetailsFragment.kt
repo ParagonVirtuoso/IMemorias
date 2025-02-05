@@ -35,6 +35,10 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.activity.OnBackPressedCallback
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 
 @AndroidEntryPoint
 class VideoDetailsFragment : Fragment() {
@@ -44,6 +48,7 @@ class VideoDetailsFragment : Fragment() {
 
     private val viewModel: VideoDetailsViewModel by viewModels()
     private val args: VideoDetailsFragmentArgs by navArgs()
+    private lateinit var commentsAdapter: CommentsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +64,7 @@ class VideoDetailsFragment : Fragment() {
         setupToolbar()
         setupVideoDetails()
         setupVideoPlayer()
+        setupComments()
         observeUiState()
         checkInitialFavoriteState()
         setupViews()
@@ -68,7 +74,11 @@ class VideoDetailsFragment : Fragment() {
         binding.toolbar.apply {
             title = args.videoTitle
             setNavigationOnClickListener {
-                findNavController().navigateUp()
+                if (args.fromNotification) {
+                    findNavController().navigate(R.id.action_global_home)
+                } else {
+                    findNavController().navigateUp()
+                }
             }
 
             setOnMenuItemClickListener { menuItem ->
@@ -85,6 +95,17 @@ class VideoDetailsFragment : Fragment() {
                 }
             }
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (args.fromNotification) {
+                    findNavController().navigate(R.id.action_global_home)
+                } else {
+                    findNavController().navigateUp()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun setupVideoDetails() {
@@ -153,10 +174,46 @@ class VideoDetailsFragment : Fragment() {
         })
     }
 
+    private fun setupComments() {
+        commentsAdapter = CommentsAdapter()
+        binding.commentsRecyclerView.apply {
+            adapter = commentsAdapter
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            
+            clearOnScrollListeners()
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+                    val totalItemCount = layoutManager.itemCount
+
+                    if (!viewModel.isLoadingComments() && 
+                        lastVisibleItem >= totalItemCount - 3 && 
+                        dy > 0) {
+                        viewModel.loadMoreComments()
+                    }
+                }
+            })
+        }
+    }
+
     private fun observeUiState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collectLatest { state ->
                 when (state) {
+                    is VideoDetailsUiState.Success -> {
+                        updateVideoDetails(state.video)
+                        commentsAdapter.submitList(state.comments)
+                    }
+                    is VideoDetailsUiState.Loading -> {
+                        // show loading
+                    }
+                    is VideoDetailsUiState.Error -> {
+                        showError(state.message)
+                    }
                     is VideoDetailsUiState.VideoAddedToPlaylist -> {
                         showMessage(getString(R.string.video_added_to_playlist))
                     }
@@ -171,20 +228,19 @@ class VideoDetailsFragment : Fragment() {
                             else getString(R.string.video_removed_from_favorites)
                         )
                     }
-                    is VideoDetailsUiState.Error -> {
-                        showError(state.message)
-                    }
-                    is VideoDetailsUiState.Loading -> {
-                        // TODO: Show loading indicator
-                    }
-                    is VideoDetailsUiState.Success -> {
-                        // TODO: Update UI with video details
-                    }
-                    is VideoDetailsUiState.Initial -> {
-                        // TODO: Add initial state
+                    VideoDetailsUiState.Initial -> {
+                        // Initial state
                     }
                 }
             }
+        }
+    }
+
+    private fun updateVideoDetails(video: Video) {
+        binding.apply {
+            titleTextView.text = video.title
+            channelTextView.text = video.channelTitle
+            descriptionTextView.text = video.description
         }
     }
 
