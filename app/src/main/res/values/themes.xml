@@ -24,7 +24,7 @@
     </style>
 
     <!-- Main theme -->
-    <style name="Theme.IMemorias" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.IMemorias" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Colors -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
@@ -50,6 +50,9 @@
         <item name="textAppearanceHeadline1">@style/TextAppearance.IMemorias.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.IMemorias.Headline2</item>
         <item name="textAppearanceBody1">@style/TextAppearance.IMemorias.Body1</item>
+
+        <!-- BottomSheet style -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <!-- No Action Bar theme -->
@@ -99,5 +102,22 @@
         <item name="android:textAllCaps">true</item>
         <item name="cornerRadius">24dp</item>
         <item name="elevation">4dp</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_background</item>
+        <item name="behavior_peekHeight">auto</item>
+        <item name="behavior_fitToContents">true</item>
+        <item name="behavior_hideable">true</item>
     </style>
 </resources>

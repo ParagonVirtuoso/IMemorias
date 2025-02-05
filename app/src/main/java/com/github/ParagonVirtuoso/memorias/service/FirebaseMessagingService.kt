@@ -72,7 +72,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        // TODO: enviar token para o backend se tivesse
+        // TODO: send token to the backend if available
     }
 
     companion object {
