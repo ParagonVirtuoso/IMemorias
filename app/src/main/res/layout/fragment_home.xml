@@ -29,6 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/spacing_fab_bottom"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -185,6 +187,13 @@
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Adiciona um espaço no final para o FAB -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_fab_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recentMemoriesCard" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

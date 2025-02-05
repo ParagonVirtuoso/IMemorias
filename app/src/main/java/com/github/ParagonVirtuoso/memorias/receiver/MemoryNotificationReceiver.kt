@@ -60,6 +60,7 @@ class MemoryNotificationReceiver : BroadcastReceiver() {
             putExtra(MemoryNotificationWorker.KEY_VIDEO_ID, videoId)
             putExtra(MemoryNotificationWorker.KEY_VIDEO_TITLE, videoTitle)
             putExtra(MemoryNotificationWorker.KEY_VIDEO_THUMBNAIL, videoThumbnail)
+            putExtra("from_notification", true)
         }
 
         val pendingIntent = PendingIntent.getActivity(

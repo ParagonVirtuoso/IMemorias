@@ -7,7 +7,18 @@
 
     <action
         android:id="@+id/action_global_video_details"
-        app:destination="@id/videoDetailsFragment" />
+        app:destination="@id/videoDetailsFragment">
+        <argument
+            android:name="fromNotification"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_home"
+        app:destination="@id/homeFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 
     <fragment
         android:id="@+id/splashFragment"
@@ -90,6 +101,10 @@
         <argument
             android:name="videoThumbnail"
             app:argType="string" />
+        <argument
+            android:name="fromNotification"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <deepLink
             android:id="@+id/deeplink_video_details"
             app:uri="imemorias://video/{videoId}/{videoTitle}/{videoThumbnail}" />

@@ -9,6 +9,7 @@
     <dimen name="spacing_xlarge">32dp</dimen>
     <dimen name="spacing_xxlarge">48dp</dimen>
     <dimen name="spacing_huge">64dp</dimen>
+    <dimen name="spacing_fab_bottom">48dp</dimen>
 
     <!-- Typography Scale -->
     <dimen name="text_caption">12sp</dimen>

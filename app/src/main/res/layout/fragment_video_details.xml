@@ -60,63 +60,125 @@
                 android:padding="16dp"
                 app:layout_constraintTop_toTopOf="@id/youtubePlayerView" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnWatchLater"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Assistir Mais Tarde"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:textColor="@color/on_secondary"
-                android:backgroundTint="@color/secondary"
-                app:iconTint="@color/on_secondary"
-                app:icon="@drawable/ic_watch_later"
-                style="@style/Widget.MaterialComponents.Button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/youtubePlayerView" />
-
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnWatchLater"
+                app:layout_constraintTop_toBottomOf="@id/youtubePlayerView"
                 tools:text="Título do Vídeo" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWatchLater"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:text="@string/watch_later"
+                android:textSize="@dimen/text_body2"
+                android:textColor="@color/on_surface"
+                android:backgroundTint="@color/surface"
+                app:icon="@drawable/ic_watch_later"
+                app:iconTint="@color/on_surface"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/icon_padding"
+                app:iconSize="@dimen/icon_size_small"
+                app:cornerRadius="@dimen/button_corner_radius"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+            <!-- Seção de Comentários -->
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:fillViewport="true"
+                app:layout_constraintTop_toBottomOf="@id/btnWatchLater"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/commentsCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    app:cardCornerRadius="@dimen/button_corner_radius"
+                    app:cardElevation="@dimen/elevation_none"
+                    app:strokeWidth="0dp"
+                    android:backgroundTint="@color/surface">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Comentários"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_title"
+                            android:textColor="@color/on_surface"
+                            android:padding="@dimen/spacing_large" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/commentsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:paddingHorizontal="@dimen/spacing_large"
+                            android:paddingBottom="@dimen/spacing_large"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/item_comment" />
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/commentsProgressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:indeterminate="true"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.core.widget.NestedScrollView>
 
             <TextView
                 android:id="@+id/channelTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_large"
                 android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                app:layout_constraintTop_toBottomOf="@id/btnWatchLater"
                 tools:text="Nome do Canal" />
 
             <TextView
                 android:id="@+id/descriptionTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_large"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/channelTextView"
-                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="Descrição detalhada do vídeo que pode ocupar várias linhas do texto. Esta é apenas uma amostra do conteúdo que será exibido neste campo." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

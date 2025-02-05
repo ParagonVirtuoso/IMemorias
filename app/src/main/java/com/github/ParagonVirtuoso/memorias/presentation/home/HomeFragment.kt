@@ -222,6 +222,9 @@ class HomeFragment : Fragment() {
                         binding.root.showSuccessSnackbar(state.message)
                         findNavController().navigate(R.id.action_home_to_auth)
                     }
+                    is HomeUiState.Initial -> {
+                        // nothing to do
+                    }
                 }
             }
         }
