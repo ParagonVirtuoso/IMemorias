@@ -59,7 +59,6 @@ class MemorySchedulerDialog : BottomSheetDialogFragment() {
         binding.apply {
             titleTextView.text = videoTitle
             
-            // Configurar data inicial como amanhã no mesmo horário
             selectedDate.add(Calendar.DAY_OF_MONTH, 1)
             updateDateTimeTexts()
         }
@@ -168,7 +167,6 @@ class MemorySchedulerDialog : BottomSheetDialogFragment() {
     }
 
     companion object {
-        const val TAG = "MemorySchedulerDialog"
 
         fun newInstance(
             videoId: String,

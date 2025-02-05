@@ -229,7 +229,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToAddMemory() {
-        // TODO: Implementar navegação para a tela de adicionar memória
+        // TODO: Implement navigation to add memory screen
         Snackbar.make(
             binding.root,
             getString(R.string.coming_soon),

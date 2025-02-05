@@ -99,7 +99,7 @@ class MemoriesFragment : Fragment() {
     }
 
     private fun navigateToVideo(memory: Memory) {
-        // TODO: Implementar navegação para o vídeo
+        // TODO: Implement navigation to video
     }
 
     private fun showMemorySchedulerDialog(memory: Memory) {

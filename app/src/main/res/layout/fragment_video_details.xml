@@ -57,50 +57,67 @@
                 android:visibility="gone"
                 android:background="@color/black"
                 android:textColor="@color/white"
-                android:padding="16dp" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:padding="16dp"
-                app:layout_constraintTop_toBottomOf="@id/youtubePlayerView">
+                app:layout_constraintTop_toTopOf="@id/youtubePlayerView" />
 
-                <TextView
-                    android:id="@+id/titleTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Título do Vídeo" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWatchLater"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assistir Mais Tarde"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/on_secondary"
+                android:backgroundTint="@color/secondary"
+                app:iconTint="@color/on_secondary"
+                app:icon="@drawable/ic_watch_later"
+                style="@style/Widget.MaterialComponents.Button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/youtubePlayerView" />
 
-                <TextView
-                    android:id="@+id/channelTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/titleTextView"
-                    tools:text="Nome do Canal" />
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnWatchLater"
+                tools:text="Título do Vídeo" />
 
-                <TextView
-                    android:id="@+id/descriptionTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/channelTextView"
-                    tools:text="Descrição detalhada do vídeo que pode ocupar várias linhas do texto. Esta é apenas uma amostra do conteúdo que será exibido neste campo." />
+            <TextView
+                android:id="@+id/channelTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                tools:text="Nome do Canal" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/channelTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="Descrição detalhada do vídeo que pode ocupar várias linhas do texto. Esta é apenas uma amostra do conteúdo que será exibido neste campo." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
