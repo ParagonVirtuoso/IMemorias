@@ -138,10 +138,11 @@ class VideoDetailsFragment : Fragment() {
             try {
                 when (val result = viewModel.checkInternetForPlayback()) {
                     is VideoResult.Success -> {
+                        binding.youtubePlayerView.isVisible = true
+                        binding.offlineMessage.isVisible = false
                         initializePlayer()
                     }
                     is VideoResult.Error -> {
-                        binding.root.showErrorSnackbar(result.message)
                         binding.youtubePlayerView.isVisible = false
                         binding.offlineMessage.apply {
                             isVisible = true
@@ -152,11 +153,12 @@ class VideoDetailsFragment : Fragment() {
                         binding.root.showInfoSnackbar(getString(R.string.checking_connection))
                     }
                     is VideoResult.Initial -> {
+                        binding.youtubePlayerView.isVisible = true
+                        binding.offlineMessage.isVisible = false
                         initializePlayer()
                     }
                 }
             } catch (e: Exception) {
-                binding.root.showErrorSnackbar(getString(R.string.error_check_connection, e.message))
                 binding.youtubePlayerView.isVisible = false
                 binding.offlineMessage.apply {
                     isVisible = true
@@ -206,13 +208,23 @@ class VideoDetailsFragment : Fragment() {
                 when (state) {
                     is VideoDetailsUiState.Success -> {
                         updateVideoDetails(state.video)
+                        binding.commentsRecyclerView.isVisible = true
+                        binding.commentsErrorMessage.isVisible = false
+                        binding.commentsProgressBar.isVisible = false
                         commentsAdapter.submitList(state.comments)
                     }
                     is VideoDetailsUiState.Loading -> {
-                        // show loading
+                        binding.commentsRecyclerView.isVisible = false
+                        binding.commentsErrorMessage.isVisible = false
+                        binding.commentsProgressBar.isVisible = true
                     }
                     is VideoDetailsUiState.Error -> {
-                        showError(state.message)
+                        binding.commentsRecyclerView.isVisible = false
+                        binding.commentsProgressBar.isVisible = false
+                        binding.commentsErrorMessage.apply {
+                            isVisible = true
+                            text = state.message
+                        }
                     }
                     is VideoDetailsUiState.VideoAddedToPlaylist -> {
                         showMessage(getString(R.string.video_added_to_playlist))

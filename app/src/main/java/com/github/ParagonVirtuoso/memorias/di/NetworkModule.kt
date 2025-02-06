@@ -49,7 +49,13 @@ object NetworkModule {
                 try {
                     chain.proceed(request)
                 } catch (e: Exception) {
-                    throw Exception("Verifique sua conexão com a internet e tente novamente")
+                    okhttp3.Response.Builder()
+                        .request(request)
+                        .protocol(okhttp3.Protocol.HTTP_1_1)
+                        .code(503)
+                        .message("Verifique sua conexão com a internet e tente novamente")
+                        .body(okhttp3.ResponseBody.create(null, ByteArray(0)))
+                        .build()
                 }
             }
             .cache(cache)

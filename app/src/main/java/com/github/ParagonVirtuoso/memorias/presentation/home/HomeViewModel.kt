@@ -21,7 +21,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         getCurrentUser()
-        // Aplicar o tema salvo ao iniciar
         themePreferences.applyTheme(themePreferences.isDarkMode())
     }
 
